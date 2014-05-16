@@ -126,10 +126,12 @@ public class ButtonsPanel extends JPanel {
                                fisierXML.createNewFile();
                                return;
                            case JOptionPane.NO_OPTION:
+                               newBtnPressed();
                                return;
                            case JOptionPane.CLOSED_OPTION:
                                return;
-                           case JOptionPane.CANCEL_OPTION:   
+                           case JOptionPane.CANCEL_OPTION:
+                               newBtnPressed();
                                return;
                        }
                 }   
@@ -156,10 +158,12 @@ public class ButtonsPanel extends JPanel {
                                fisierXML2.createNewFile();
                                return;
                            case JOptionPane.NO_OPTION:
+                               newBtnPressed();
                                return;
                            case JOptionPane.CLOSED_OPTION:
                                return;
-                           case JOptionPane.CANCEL_OPTION:   
+                           case JOptionPane.CANCEL_OPTION: 
+                               newBtnPressed();
                                return;
                        }
                 }
