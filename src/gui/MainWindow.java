@@ -1,5 +1,7 @@
 package gui;
 
+import gui.left_side.LeftSidePanel;
+import gui.right_side.ViewsPanel;
 import model.AutoSave;
 import model.RecentFiles;
 
@@ -76,7 +78,14 @@ public class MainWindow extends javax.swing.JFrame {
         }
         autoUpdate.start();
     }
-
+    
+    public LeftSidePanel getLeftSidePanel(){
+        return leftSidePanel;
+    }
+    
+    public ViewsPanel getViewsPanel(){
+        return rightSidePanel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.left_side.LeftSidePanel leftSidePanel;

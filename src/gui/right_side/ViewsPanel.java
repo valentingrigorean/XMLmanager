@@ -38,6 +38,18 @@ public class ViewsPanel extends JPanel implements Observer {
             System.out.println("XMLVIEW OBSERVER");
         }
     }
+    
+    public XmlView getXmlView(){
+        return xmlView;
+    }
+    
+    public TextView getXmlText(){
+        return textView;
+    }
+    
+    public TreeView getXmlTree(){
+        return treeView;
+    }
 
     public void setMainWindow(MainWindow mw) {
         this.mw = mw;

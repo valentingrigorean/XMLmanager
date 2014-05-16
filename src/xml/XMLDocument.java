@@ -6,10 +6,18 @@
 
 package xml;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 /**
  *
  * @author Valentin
  */
 public class XMLDocument {
+    DocumentBuilderFactory dbf;
+    DocumentBuilder db;
     
+    public XMLDocument(){
+        
+    }
 }

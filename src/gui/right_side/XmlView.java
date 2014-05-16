@@ -1,13 +1,20 @@
 package gui.right_side;
 
+import java.awt.Color;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 public class XmlView extends AbstractView {
 
+    private Highlighter highlighter;
+    private HighlightPainter painter;
+
     public XmlView() {
-        super(new JTextArea(), "XmlView");     
+        super(new JTextArea(), "XmlView");
         init();
-    }   
+    }
 
     @Override
     public void parse() {
@@ -15,6 +22,8 @@ public class XmlView extends AbstractView {
     }
 
     private void init() {
+        highlighter = ((JTextArea) view).getHighlighter();
+        painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);       
     }
 
     @Override
