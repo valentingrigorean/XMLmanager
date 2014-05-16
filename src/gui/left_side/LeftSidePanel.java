@@ -9,17 +9,10 @@ public class LeftSidePanel extends JPanel {
 
     private ButtonsPanel buttonsPanel;
     private RecentFilesPanel recentFilesPanel;
-    private MainWindow mw;
-
-    public LeftSidePanel(MainWindow mw) {
-        super();
-        this.mw = mw;
-        init();
-    }
+    private MainWindow mw;  
     
     public LeftSidePanel() {
-        super();      
-         this.mw = null;
+        super();         
         init();
     }
     
@@ -27,12 +20,12 @@ public class LeftSidePanel extends JPanel {
         return buttonsPanel;
     }
     
-  /*  public void setMainWindow(MainWindow mw){
+    public void setMainWindow(MainWindow mw){
         this.mw = mw;
         buttonsPanel.setMainWindow(mw);
         recentFilesPanel.setMainWindow(mw);
     }
-    */
+    
     
     public RecentFilesPanel getRecentFilesPanel(){
         return recentFilesPanel;
@@ -42,7 +35,7 @@ public class LeftSidePanel extends JPanel {
         this.setPreferredSize(new Dimension(250, 250));
         this.setLayout(new GridLayout(1, 2));           
 
-        buttonsPanel = new ButtonsPanel(mw);
+        buttonsPanel = new ButtonsPanel();
         recentFilesPanel = new RecentFilesPanel();
 
         this.add(buttonsPanel);

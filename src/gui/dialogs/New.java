@@ -6,7 +6,6 @@
 
 package gui.dialogs;
 
-import gui.dialogs.AbstractDialog;
 import java.awt.Component;
 import javax.swing.JFileChooser;
 
@@ -24,8 +23,7 @@ public class New extends AbstractDialog {
     }
 
     @Override
-    public void doModal() {
-      
+    public void doModal() {    
         
         if (showDialog(comp,"New") == JFileChooser.APPROVE_OPTION) {
             path = getSelectedFile().toString();

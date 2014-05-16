@@ -24,7 +24,6 @@ public abstract class AbstractView extends JPanel {
 
     public AbstractView(JComponent view, String text) {
         super();
-
         this.view = view;
         label = new FlowLabel(text);
         init();

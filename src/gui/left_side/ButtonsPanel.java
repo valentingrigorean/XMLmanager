@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,13 +24,16 @@ public class ButtonsPanel extends JPanel {
     private JButton btn3;
     private JButton btn4;
     private JButton btn5;
-    private final MainWindow mw;
-    private Component frame;
+    private MainWindow mw;
+  
 
-    public ButtonsPanel(MainWindow mw) {
+    public ButtonsPanel() {
         super();
-        this.mw = mw;
         init();
+    }
+    
+    public void setMainWindow(MainWindow mw){
+        this.mw = mw;        
     }
 
     private void init() {
@@ -102,7 +103,6 @@ public class ButtonsPanel extends JPanel {
           
         New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
         newDialog.doModal();
-        
         //newDialog.setName("New");
       
         if(newDialog.isSet()){
@@ -115,7 +115,7 @@ public class ButtonsPanel extends JPanel {
                 if(!fisierXML.createNewFile())
                {
               
-                int n = JOptionPane.showConfirmDialog(frame,
+                int n = JOptionPane.showConfirmDialog(mw,
                 "The file already exist. \nDo you want to overwrite? ",
                 "Existing file",
                 JOptionPane.YES_NO_CANCEL_OPTION
@@ -143,7 +143,7 @@ public class ButtonsPanel extends JPanel {
                if(!fisierXML2.createNewFile())
                {
                     
-                   int n = JOptionPane.showConfirmDialog(frame,
+                   int n = JOptionPane.showConfirmDialog(mw,
                 "The file already exist. \nDo you want to overwrite? ",
                 "Existing file",
                 JOptionPane.YES_NO_CANCEL_OPTION
