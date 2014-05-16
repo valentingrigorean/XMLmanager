@@ -10,7 +10,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -61,7 +63,11 @@ public class ButtonsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                openBtnPressed();
+                try {
+                    openBtnPressed();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -108,7 +114,7 @@ public class ButtonsPanel extends JPanel {
     
     private void newBtnPressed() throws IOException {
           
-        New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
+       New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
        File fisierXML1 = new File("");
         if(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
         {
@@ -224,13 +230,73 @@ public class ButtonsPanel extends JPanel {
     } 
       
  
-    private void openBtnPressed() {
+    private void openBtnPressed() throws FileNotFoundException {
         Open open = new Open(this, ".xml", "Extensible Markup Language (.XML)");
-        open.doModal();
+        //open.doModal();
+        
+        if(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+        {
+             
+            open.doModal();
+            if(open.isSet()){
+          
+            // 
+            //  mw.setCurrentFilePath(newDialog.getPath());
+            File fisierXML = new File(open.getPath());
+            Scanner input = new Scanner(fisierXML);
+            //fisierXML1 = fisierXML;
+            
+           while(input.hasNext())
+           {
+               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).append(input.nextLine()+"\n");
+               
+           }
+            
+        }
+        }
+            else
+            {
+                int n = JOptionPane.showConfirmDialog(mw,
+                "Do you want to save the existing data? ",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               saveBtnPressed();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                             //  mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                             
+                               return;
+                           case JOptionPane.NO_OPTION:
+                               open.doModal();
+                               
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               System.out.println("---------");
+                              // mw.getViewsPanel().getXmlView().setDefaultText();
+                              // mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                               File fisierXML1 = new File(open.getPath());
+                               Scanner input = new Scanner(fisierXML1);
+                               
+                                 while(input.hasNext())
+                                 {
+                                    ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).append(input.nextLine()+"\n");
+               
+                                   }
+                              
+                           case JOptionPane.CLOSED_OPTION:
+                           case JOptionPane.CANCEL_OPTION:
+                          
+                       }
+            }
+        /*((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
         if(open.isSet()){
             mw.setCurrentFilePath(open.getPath());
+            File fisierXML = new File (open.getPath());
+           
+               }*/
         }
-    }
+
 
     private void saveBtnPressed() {
         Save save = new Save(this, ".xml", "Extensible Markup Language (.XML)");
