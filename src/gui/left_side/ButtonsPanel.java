@@ -16,12 +16,15 @@ public class ButtonsPanel extends JPanel {
     private JButton btn2;
     private JButton btn3;
     private JButton btn4;
-    private final MainWindow mw;
+    private MainWindow mw;
 
-    public ButtonsPanel(MainWindow mw) {
-        super();
-        this.mw = mw;
+    public ButtonsPanel() {
+        super();        
         init();
+    }
+    
+    public void setMainWindow(MainWindow mw){
+        this.mw = mw;
     }
 
     private void init() {
@@ -41,7 +44,7 @@ public class ButtonsPanel extends JPanel {
         btn2.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent ae) {
+            public void actionPerformed(ActionEvent ae) {                
                 openBtnPressed();
             }
         });

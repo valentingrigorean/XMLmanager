@@ -1,6 +1,7 @@
 package gui.right_side;
 
 import gui.FlowLabel;
+import gui.MainWindow;
 import gui.Menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +20,7 @@ public abstract class AbstractView extends JPanel {
     protected FlowLabel label;
     protected Update update;
     protected ArrayList<Observer> observers;
+    protected MainWindow mw;
 
     public AbstractView(JComponent view, String text) {
         super();
@@ -44,12 +46,16 @@ public abstract class AbstractView extends JPanel {
         }
     }
 
-    public void addPopMenu(Menu menu) {
+    public void setMainWindow(MainWindow mw) {
+        this.mw = mw;
+    }
 
+    public void addPopMenu(Menu menu) {
         this.setComponentPopupMenu(menu);
         view.setComponentPopupMenu(menu);
-
     }
+
+    public abstract void parse();
 
     private void init() {
         this.setPreferredSize(new Dimension(300, 300));

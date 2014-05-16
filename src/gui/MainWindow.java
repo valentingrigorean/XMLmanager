@@ -8,8 +8,7 @@ public class MainWindow extends javax.swing.JFrame {
     @SuppressWarnings("LeakingThisInConstructor")
     public MainWindow() {
         initComponents();
-        init();
-        System.out.println("Qweqwe");
+        init();       
     }
 
     @SuppressWarnings("unchecked")

@@ -14,12 +14,15 @@ public class RecentFilesPanel extends JPanel {
 
     private JTree tree;
     private JPanel panel;
-    private final MainWindow mw;
+    private MainWindow mw;
 
-    public RecentFilesPanel(MainWindow mw) {
-        super();
-        this.mw = mw;
+    public RecentFilesPanel() {
+        super();        
         init();
+    }
+
+    public void setMainWindow(MainWindow mw) {
+        this.mw = mw;
     }
 
     private void init() {

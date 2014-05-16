@@ -22,6 +22,8 @@ public class LeftSidePanel extends JPanel {
     
     public void setMainWindow(MainWindow mw){
         this.mw = mw;
+        buttonsPanel.setMainWindow(mw);
+        recentFilesPanel.setMainWindow(mw);
     }
     
     public RecentFilesPanel getRecentFilesPanel(){
@@ -32,8 +34,8 @@ public class LeftSidePanel extends JPanel {
         this.setPreferredSize(new Dimension(250, 250));
         this.setLayout(new GridLayout(1, 2));           
 
-        buttonsPanel = new ButtonsPanel(mw);
-        recentFilesPanel = new RecentFilesPanel(mw);
+        buttonsPanel = new ButtonsPanel();
+        recentFilesPanel = new RecentFilesPanel();
 
         this.add(buttonsPanel);
         this.add(recentFilesPanel);
