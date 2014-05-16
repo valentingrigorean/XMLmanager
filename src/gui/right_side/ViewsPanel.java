@@ -41,6 +41,9 @@ public class ViewsPanel extends JPanel implements Observer {
 
     public void setMainWindow(MainWindow mw) {
         this.mw = mw;
+        textView.setMainWindow(mw);  
+        xmlView.setMainWindow(mw);
+        treeView.setMainWindow(mw);
     }
 
     public void showPanel(int n, boolean b) {
