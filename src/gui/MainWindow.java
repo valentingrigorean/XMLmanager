@@ -53,7 +53,7 @@ public class MainWindow extends javax.swing.JFrame {
                 MainWindow fereastra = new MainWindow();
                 
                 fereastra.setVisible(true);
-                fereastra.setTitle("XML Editor 2.0");
+                fereastra.setTitle("XML Editor 2.1");
                 
                 ImageIcon img = new ImageIcon("./xml_editor_logo_icon_v2.png");
                 fereastra.setIconImage(img.getImage());
