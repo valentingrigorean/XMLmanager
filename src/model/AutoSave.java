@@ -4,7 +4,7 @@ package model;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AutoUpdate implements Runnable {
+public class AutoSave implements Runnable {
 
     private Thread thread;
     private String path;
@@ -12,7 +12,7 @@ public class AutoUpdate implements Runnable {
 
     public final static int SLEEP_TIME = 600000;
 
-    public AutoUpdate(String path) {
+    public AutoSave(String path) {
         this.path = path;
     }
     
@@ -40,7 +40,7 @@ public class AutoUpdate implements Runnable {
                 Thread.sleep(SLEEP_TIME);
                 saveFile();
             } catch (InterruptedException ex) {
-                Logger.getLogger(AutoUpdate.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AutoSave.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

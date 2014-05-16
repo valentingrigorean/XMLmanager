@@ -1,6 +1,6 @@
 package gui;
 
-import model.AutoUpdate;
+import model.AutoSave;
 import model.RecentFiles;
 
 public class MainWindow extends javax.swing.JFrame {
@@ -53,8 +53,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void init() {
-        leftSidePanel.setMainWindow(this);
-        rightSidePanel.setMainWindow(this);
+    //    leftSidePanel.setMainWindow(this);
+      //  rightSidePanel.setMainWindow(this);
     }
 
     public void setCurrentFilePath(String path) {
@@ -69,7 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void autoUpdateStart() {
         if (autoUpdate == null) {
-            autoUpdate = new AutoUpdate(currentFilePath);
+            autoUpdate = new AutoSave(currentFilePath);
         } else {
             autoUpdate.stop();
             autoUpdate.setFilePath(currentFilePath);
@@ -82,7 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
     private gui.left_side.LeftSidePanel leftSidePanel;
     private gui.right_side.ViewsPanel rightSidePanel;
     // End of variables declaration//GEN-END:variables
-    private AutoUpdate autoUpdate;
+    private AutoSave autoUpdate;
     private String currentFilePath;
     private RecentFiles recentFiles;
 
