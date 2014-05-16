@@ -13,6 +13,14 @@ import javax.swing.JTree;
 public class RecentFilesPanel extends JPanel {
 
     private JTree tree;
+
+    public JTree getTree() {
+        return tree;
+    }
+
+    public void setTree(JTree tree) {
+        this.tree = tree;
+    }
     private JPanel panel;
     private MainWindow mw;
 

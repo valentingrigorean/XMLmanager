@@ -12,7 +12,7 @@ public class XmlView extends AbstractView {
     private HighlightPainter painter;
 
     public XmlView() {
-        super(new JTextArea(), "XmlView");
+        super(new JTextArea(), "XMLView");
         init();
     }
 
@@ -23,11 +23,18 @@ public class XmlView extends AbstractView {
 
     private void init() {
         highlighter = ((JTextArea) view).getHighlighter();
-        painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);       
+        painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink); 
+        this.setDefaultText();
     }
 
     @Override
     public void setInput(AbstractView absView) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void setDefaultText()
+    {
+       // ((JTextArea)(this.view)).append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n \n <root> \n </root>");
+        ((JTextArea)(this.view)).insert("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n \n <root> \n </root>",0);
     }
 }

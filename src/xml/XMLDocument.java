@@ -6,6 +6,8 @@
 
 package xml;
 
+import gui.MainWindow;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -16,8 +18,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class XMLDocument {
     DocumentBuilderFactory dbf;
     DocumentBuilder db;
+    private MainWindow mw;
     
     public XMLDocument(){
         
     }
+    
+    public void setDefaultText()
+    {
+        if(mw.getLeftSidePanel().getButtonsPanel().getBtn1().isCursorSet())
+            mw.getViewsPanel().getXmlView().setDefaultText();
+    }
+    
 }

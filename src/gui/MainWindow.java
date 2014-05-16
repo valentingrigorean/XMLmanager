@@ -55,8 +55,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void init() {
-    //    leftSidePanel.setMainWindow(this);
-      //  rightSidePanel.setMainWindow(this);
+           leftSidePanel.setMainWindow(this);
+           rightSidePanel.setMainWindow(this);
     }
 
     public void setCurrentFilePath(String path) {

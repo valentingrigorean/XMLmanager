@@ -1,7 +1,7 @@
 package gui.left_side;
 
-import gui.dialogs.New;
 import gui.MainWindow;
+import gui.dialogs.New;
 import gui.dialogs.Open;
 import gui.dialogs.Save;
 import java.awt.Component;
@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class ButtonsPanel extends JPanel {
 
@@ -98,20 +99,29 @@ public class ButtonsPanel extends JPanel {
         this.add(btn4);
         this.add(btn5);
     }
-
+    
+    private void linkRecentFilesPanel(New dialog)
+    {
+        dialog.getPath();
+        //split the link and add to the files panel
+    }
+    
     private void newBtnPressed() throws IOException {
           
         New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
-        newDialog.doModal();
-        //newDialog.setName("New");
-      
-        if(newDialog.isSet()){
-           
-           // System.out.println("--------");
-          //  mw.setCurrentFilePath(newDialog.getPath());
+       File fisierXML1 = new File("");
+        if(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+        {
+             
+            newDialog.doModal();
+            if(newDialog.isSet()){
+          
+            // 
+            //  mw.setCurrentFilePath(newDialog.getPath());
             File fisierXML = new File(newDialog.getPath());
             if(newDialog.getPath().contains(".xml"))
-            {
+            { 
+                fisierXML1 = fisierXML;
                 if(!fisierXML.createNewFile())
                {
               
@@ -124,6 +134,9 @@ public class ButtonsPanel extends JPanel {
                            case JOptionPane.YES_OPTION:
                                fisierXML.delete();
                                fisierXML.createNewFile();
+                                mw.getViewsPanel().getXmlView().setDefaultText();
+                                mw.getViewsPanel().getXmlView().setName(fisierXML.getName());
+                               
                                return;
                            case JOptionPane.NO_OPTION:
                                newBtnPressed();
@@ -132,11 +145,14 @@ public class ButtonsPanel extends JPanel {
                                return;
                            case JOptionPane.CANCEL_OPTION:
                                newBtnPressed();
-                               return;
+                               
                        }
                 }   
-                else
-                    fisierXML.createNewFile();
+                else{
+                   fisierXML.createNewFile();
+                   mw.getViewsPanel().getXmlView().setDefaultText();
+                   mw.getViewsPanel().getXmlView().setName(fisierXML.getName());
+               }
             }
             else
             {
@@ -156,6 +172,9 @@ public class ButtonsPanel extends JPanel {
                                fisierXML.delete();
                                fisierXML2.delete();
                                fisierXML2.createNewFile();
+                               mw.getViewsPanel().getXmlView().setDefaultText();
+                               mw.getViewsPanel().getXmlView().setName(fisierXML2.getName());
+                              
                                return;
                            case JOptionPane.NO_OPTION:
                                newBtnPressed();
@@ -164,21 +183,47 @@ public class ButtonsPanel extends JPanel {
                                return;
                            case JOptionPane.CANCEL_OPTION: 
                                newBtnPressed();
-                               return;
+                            
                        }
                 }
                else 
+               {
                    fisierXML2.createNewFile();
+                   mw.getViewsPanel().getXmlView().setDefaultText();
+               }
             }
-          
+        }
+        }
+            else
+            {
+                int n = JOptionPane.showConfirmDialog(mw,
+                "Do you want to save the existing data? ",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               saveBtnPressed();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                             
+                               return;
+                           case JOptionPane.NO_OPTION:
+                               newDialog.doModal();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               mw.getViewsPanel().getXmlView().setDefaultText();
+                               mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                               
+                              
+                           case JOptionPane.CLOSED_OPTION:
+                           case JOptionPane.CANCEL_OPTION:
+                          
+                       }
+            }
+                
     } 
-     
-// automatic go mouse to xml view
-
-}
-            
-            
-
+      
+ 
     private void openBtnPressed() {
         Open open = new Open(this, ".xml", "Extensible Markup Language (.XML)");
         open.doModal();
@@ -194,5 +239,45 @@ public class ButtonsPanel extends JPanel {
         if(save.isSet()){
             mw.setCurrentFilePath(save.getPath());
         }
+    }
+
+    public JButton getBtn1() {
+        return btn1;
+    }
+
+    public void setBtn1(JButton btn1) {
+        this.btn1 = btn1;
+    }
+
+    public JButton getBtn2() {
+        return btn2;
+    }
+
+    public void setBtn2(JButton btn2) {
+        this.btn2 = btn2;
+    }
+
+    public JButton getBtn3() {
+        return btn3;
+    }
+
+    public void setBtn3(JButton btn3) {
+        this.btn3 = btn3;
+    }
+
+    public JButton getBtn4() {
+        return btn4;
+    }
+
+    public void setBtn4(JButton btn4) {
+        this.btn4 = btn4;
+    }
+
+    public JButton getBtn5() {
+        return btn5;
+    }
+
+    public void setBtn5(JButton btn5) {
+        this.btn5 = btn5;
     }
 }
