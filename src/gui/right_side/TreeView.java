@@ -17,4 +17,9 @@ public class TreeView extends AbstractView {
     private void init() {
     }
 
+    @Override
+    public void setInput(AbstractView absView) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

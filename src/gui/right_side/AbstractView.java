@@ -69,4 +69,6 @@ public abstract class AbstractView extends JPanel {
         this.update = new Update();
         this.observers = new ArrayList<>();
     }
+    
+    abstract public void setInput(AbstractView absView);
 }
