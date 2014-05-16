@@ -2,6 +2,7 @@ package gui;
 
 import gui.left_side.LeftSidePanel;
 import gui.right_side.ViewsPanel;
+import javax.swing.ImageIcon;
 import model.AutoSave;
 import model.RecentFiles;
 
@@ -49,7 +50,15 @@ public class MainWindow extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainWindow().setVisible(true);
+                MainWindow fereastra = new MainWindow();
+                
+                fereastra.setVisible(true);
+                fereastra.setTitle("XML Editor 2.0");
+                
+                ImageIcon img = new ImageIcon("./xml_editor_logo_icon_v2.png");
+                fereastra.setIconImage(img.getImage());
+                
+                fereastra.setLocationRelativeTo(null);
             }
         });
     }
