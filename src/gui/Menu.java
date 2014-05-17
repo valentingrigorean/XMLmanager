@@ -39,7 +39,7 @@ public class Menu extends JPopupMenu implements ActionListener {
     }
     
     public void setSelected(int n,boolean b){
-        System.out.println(n + "," +b);
+        //System.out.println(n + "," +b);
         ((JCheckBoxMenuItem)this.getComponent(n)).setSelected(b);
     }
 

@@ -28,15 +28,22 @@ public class ViewsPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println(currItems);
         if (arg instanceof TextView) {
-            showPanel(TEXT_VIEW);          
-            menu.setSelected(TEXT_VIEW, false);
+            showPanel(TEXT_VIEW);
+            if (currItems != 4) {
+                menu.setSelected(TEXT_VIEW, false);
+            }
         } else if (arg instanceof TreeView) {
-            showPanel(TREE_VIEW);     
-            menu.setSelected(TREE_VIEW, false);
+            showPanel(TREE_VIEW);
+            if (currItems != 1) {
+                menu.setSelected(TREE_VIEW, false);
+            }
         } else if (arg instanceof XmlView) {
-            showPanel(XML_VIEW);            
-            menu.setSelected(XML_VIEW, false);
+            showPanel(XML_VIEW);
+            if (currItems != 2) {
+                menu.setSelected(XML_VIEW, false);
+            }
         }
     }
 
@@ -60,7 +67,7 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     public void showPanel(int n) {
-        currItems ^= 1 << n;        
+        currItems ^= 1 << n;
         if (currItems > 0) {
             rearrange();
             this.revalidate();
@@ -99,7 +106,7 @@ public class ViewsPanel extends JPanel implements Observer {
             case 1:
                 this.add(treeView);
         }
-    }   
+    }
 
     private void init() {
         textView = new TextView();
@@ -117,12 +124,12 @@ public class ViewsPanel extends JPanel implements Observer {
         textView.addObserver(this);
         xmlView.addObserver(this);
         treeView.addObserver(this);
-        
-        ((XmlOutlineTree)treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());        
+
+        ((XmlOutlineTree) treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());
         treeView.revalidate();
 
         this.add(textView);
         this.add(xmlView);
         this.add(treeView);
-    }   
+    }
 }
