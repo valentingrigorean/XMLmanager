@@ -1,6 +1,7 @@
 package gui.left_side;
 
 import gui.MainWindow;
+import gui.dialogs.Help;
 import gui.dialogs.New;
 import gui.dialogs.Open;
 import gui.dialogs.Save;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,7 +101,7 @@ public class ButtonsPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-               // System.exit(0);
+               helpButtonPressed();
             }
 
         });
@@ -443,6 +445,14 @@ public class ButtonsPanel extends JPanel {
                */
     }
 
+    public void helpButtonPressed(){
+        
+        URL index;
+        Help fereastra = new Help();
+        index = fereastra.getClass().getClassLoader().getResource("./gui/help_files/index.html");
+        fereastra = new Help("Help", index);
+    }
+    
     public JButton getBtn1() {
         return btn1;
     }
