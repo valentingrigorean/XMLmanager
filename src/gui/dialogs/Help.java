@@ -68,18 +68,22 @@ public class Help extends JFrame implements ActionListener{
             //setDefaultCloseOperation(EXIT_ON_CLOSE);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE); //inchid doar fereastra help
       
+            ImageIcon img = new ImageIcon("./xml_editor_logo_icon_v2.png");
+            setIconImage(img.getImage());
+            
             setSize(new Dimension(600, 650));
             setLocationRelativeTo(null); //afisare in centrul ecranului
             setVisible(true);
         // ------------------------------------------------------
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         String actionButtonName = e.getActionCommand(); //stochez numele butonului
         
         // in caz ca am mai multe butoane, folosesc un singur action listener
-        if (actionButtonName == "Close") {
+        if ("Close".equals(actionButtonName)) {
             processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); //inchid doar fereastra help (WINDOW_CLOSING)
         }
     }
