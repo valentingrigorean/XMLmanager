@@ -7,10 +7,7 @@ public class TreeView extends AbstractView {
     public TreeView() {
         super(new JTree(), "TreeView");
         init();
-    }
-
-    
-    
+    }   
     
     @Override
     public void parse() {

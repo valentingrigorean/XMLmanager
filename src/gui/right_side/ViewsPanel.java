@@ -27,51 +27,49 @@ public class ViewsPanel extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof TextView) {
-            System.out.println("TEXVIEW OBSERVER");
-            return;
-        }
-        if (arg instanceof TreeView) {
-            System.out.println("TREE OBSERVER");
-            return;
-        }
-        if (arg instanceof XmlView) {
-            System.out.println("XMLVIEW OBSERVER");
+            showPanel(TEXT_VIEW);          
+            menu.setSelected(TEXT_VIEW, false);
+        } else if (arg instanceof TreeView) {
+            showPanel(TREE_VIEW);     
+            menu.setSelected(TREE_VIEW, false);
+        } else if (arg instanceof XmlView) {
+            showPanel(XML_VIEW);            
+            menu.setSelected(XML_VIEW, false);
         }
     }
-    
-    public XmlView getXmlView(){
+
+    public XmlView getXmlView() {
         return xmlView;
     }
-    
-    public TextView getXmlText(){
+
+    public TextView getXmlText() {
         return textView;
     }
-    
-    public TreeView getXmlTree(){
+
+    public TreeView getXmlTree() {
         return treeView;
     }
 
     public void setMainWindow(MainWindow mw) {
         this.mw = mw;
-        textView.setMainWindow(mw);  
+        textView.setMainWindow(mw);
         xmlView.setMainWindow(mw);
         treeView.setMainWindow(mw);
     }
 
-    public void showPanel(int n, boolean b) {
-        currItems ^= 1 << n;
+    public void showPanel(int n) {
+        currItems ^= 1 << n;        
         if (currItems > 0) {
             rearrange();
             this.revalidate();
         } else {
             currItems ^= 1 << n;
-            menu.setSelected(n);
+            menu.setSelected(n, true);
         }
     }
 
     private void rearrange() {
         this.removeAll();
-        System.out.println(currItems);
         switch (currItems) {
             case 7:
                 this.add(textView);

@@ -33,29 +33,27 @@ public class Menu extends JPopupMenu implements ActionListener {
         xml.addActionListener(this);
         tree.addActionListener(this);
 
-        this.add(text);
-        this.add(xml);
         this.add(tree);
+        this.add(xml);
+        this.add(text);
     }
     
-    public void setSelected(int n){
-        ((JCheckBoxMenuItem)this.getComponent(n)).setSelected(true);
+    public void setSelected(int n,boolean b){
+        System.out.println(n + "," +b);
+        ((JCheckBoxMenuItem)this.getComponent(n)).setSelected(b);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {        
+    public void actionPerformed(ActionEvent e) {           
         switch (e.getActionCommand()) {
             case "TextView":                
-                controller.showPanel(ViewsPanel.TEXT_VIEW,
-                        ((JCheckBoxMenuItem) e.getSource()).isSelected());
+                controller.showPanel(ViewsPanel.TEXT_VIEW);
                 return;
             case "XmlView":
-                controller.showPanel(ViewsPanel.XML_VIEW,
-                        ((JCheckBoxMenuItem) e.getSource()).isSelected());
+                controller.showPanel(ViewsPanel.XML_VIEW);
                 return;
             case "TreeView":
-                controller.showPanel(ViewsPanel.TREE_VIEW,
-                        ((JCheckBoxMenuItem) e.getSource()).isSelected());
+                controller.showPanel(ViewsPanel.TREE_VIEW);
         }
     }
 

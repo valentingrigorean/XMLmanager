@@ -3,13 +3,9 @@ package gui.right_side;
 import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Highlighter;
-import javax.swing.text.Highlighter.HighlightPainter;
 
 public class XmlView extends AbstractView {
-
-    private Highlighter highlighter;
-    private HighlightPainter painter;
+    
 
     public XmlView() {
         super(new JTextArea(), "XMLView");
@@ -22,9 +18,7 @@ public class XmlView extends AbstractView {
     }
 
     private void init() {
-        highlighter = ((JTextArea) view).getHighlighter();
-        painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink); 
-        this.setDefaultText();
+       
     }
 
     @Override
