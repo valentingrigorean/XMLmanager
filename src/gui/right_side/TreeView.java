@@ -22,10 +22,5 @@ public class TreeView extends AbstractView {
         scrollPane = new JScrollPane(view);
         ((JScrollPane) scrollPane).setViewportView(view);
         super.add(scrollPane, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void setInput(AbstractView absView) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }    
 }

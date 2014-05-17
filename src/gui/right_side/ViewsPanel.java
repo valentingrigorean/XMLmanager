@@ -46,6 +46,12 @@ public class ViewsPanel extends JPanel implements Observer {
             }
         }
     }
+    
+    public void reinvalidateViews(){
+        xmlView.revalidate();
+        textView.revalidate();
+        treeView.revalidate();
+    }
 
     public XmlView getXmlView() {
         return xmlView;

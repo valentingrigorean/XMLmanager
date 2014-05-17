@@ -22,10 +22,5 @@ public class TextView extends AbstractView {
         ((JTextArea) view).setEditable(false);
         scrollPane = new JScrollPane(view);
         super.add(view, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void setInput(AbstractView absView) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }   
 }

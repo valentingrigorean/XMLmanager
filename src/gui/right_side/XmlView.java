@@ -24,12 +24,7 @@ public class XmlView extends AbstractView {
         label.setText("XMLEditor");
         scrollPane = new RTextScrollPane(view,true);
         super.add(scrollPane,BorderLayout.CENTER);
-    }
-
-    @Override
-    public void setInput(AbstractView absView) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }  
 
     public void setDefaultText() {
         ((JTextArea) (this.view)).insert("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", 0);

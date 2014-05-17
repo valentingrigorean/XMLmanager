@@ -89,7 +89,5 @@ public abstract class AbstractView extends JPanel {
 
     private void btnExitPressed() {
         this.notifyObservers();
-    }
-
-    abstract public void setInput(AbstractView absView);
+    }    
 }
