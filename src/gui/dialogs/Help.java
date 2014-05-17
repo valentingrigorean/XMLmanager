@@ -66,7 +66,7 @@ public class Help extends JFrame implements ActionListener{
             //setDefaultCloseOperation(EXIT_ON_CLOSE);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE); //inchid doar fereastra help
       
-            setSize(new Dimension(600, 700));
+            setSize(new Dimension(600, 650));
             setLocationRelativeTo(null); //afisare in centrul ecranului
             setVisible(true);
         // ------------------------------------------------------
