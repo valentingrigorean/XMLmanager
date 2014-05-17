@@ -17,6 +17,14 @@ import gui.Update;
 public abstract class AbstractView extends JPanel {
 
     protected JComponent view;
+
+    public JComponent getView() {
+        return view;
+    }
+
+    public void setView(JComponent view) {
+        this.view = view;
+    }
     protected FlowLabel label;
     protected Update update;
     protected ArrayList<Observer> observers;
@@ -25,6 +33,10 @@ public abstract class AbstractView extends JPanel {
     public AbstractView(JComponent view, String text) {
         super();
         this.view = view;
+        label = new FlowLabel(text);
+        init();
+    }
+    public void setLabel(String text) {
         label = new FlowLabel(text);
         init();
     }

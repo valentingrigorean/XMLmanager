@@ -1,7 +1,7 @@
 package gui.left_side;
 
-import gui.dialogs.New;
 import gui.MainWindow;
+import gui.dialogs.New;
 import gui.dialogs.Open;
 import gui.dialogs.Save;
 import java.awt.Component;
@@ -10,12 +10,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class ButtonsPanel extends JPanel {
 
@@ -60,7 +64,11 @@ public class ButtonsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                openBtnPressed();
+                try {
+                    openBtnPressed();
+                } catch (IOException ex) {
+                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -69,7 +77,11 @@ public class ButtonsPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                saveBtnPressed();
+                try {
+                    saveBtnPressed();
+                } catch (IOException ex) {
+                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -98,20 +110,29 @@ public class ButtonsPanel extends JPanel {
         this.add(btn4);
         this.add(btn5);
     }
-
+    
+    private void linkRecentFilesPanel(New dialog)
+    {
+        dialog.getPath();
+        //split the link and add to the files panel
+    }
+    
     private void newBtnPressed() throws IOException {
           
-        New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
-        newDialog.doModal();
-        //newDialog.setName("New");
-      
-        if(newDialog.isSet()){
-           
-           // System.out.println("--------");
-          //  mw.setCurrentFilePath(newDialog.getPath());
+       New newDialog = new New (this,".xml","Extensible Markup Language (.XML)");
+       File fisierXML1 = new File("");
+        if(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+        {
+             
+            newDialog.doModal();
+            if(newDialog.isSet()){
+          
+            // 
+            //  mw.setCurrentFilePath(newDialog.getPath());
             File fisierXML = new File(newDialog.getPath());
             if(newDialog.getPath().contains(".xml"))
-            {
+            { 
+                fisierXML1 = fisierXML;
                 if(!fisierXML.createNewFile())
                {
               
@@ -124,6 +145,9 @@ public class ButtonsPanel extends JPanel {
                            case JOptionPane.YES_OPTION:
                                fisierXML.delete();
                                fisierXML.createNewFile();
+                                mw.getViewsPanel().getXmlView().setDefaultText();
+                                mw.getViewsPanel().getXmlView().setName(fisierXML.getName());
+                               
                                return;
                            case JOptionPane.NO_OPTION:
                                newBtnPressed();
@@ -132,11 +156,14 @@ public class ButtonsPanel extends JPanel {
                                return;
                            case JOptionPane.CANCEL_OPTION:
                                newBtnPressed();
-                               return;
+                               
                        }
                 }   
-                else
-                    fisierXML.createNewFile();
+                else{
+                   fisierXML.createNewFile();
+                   mw.getViewsPanel().getXmlView().setDefaultText();
+                   mw.getViewsPanel().getXmlView().setName(fisierXML.getName());
+               }
             }
             else
             {
@@ -156,6 +183,9 @@ public class ButtonsPanel extends JPanel {
                                fisierXML.delete();
                                fisierXML2.delete();
                                fisierXML2.createNewFile();
+                               mw.getViewsPanel().getXmlView().setDefaultText();
+                               mw.getViewsPanel().getXmlView().setName(fisierXML2.getName());
+                              
                                return;
                            case JOptionPane.NO_OPTION:
                                newBtnPressed();
@@ -164,35 +194,292 @@ public class ButtonsPanel extends JPanel {
                                return;
                            case JOptionPane.CANCEL_OPTION: 
                                newBtnPressed();
-                               return;
+                            
                        }
                 }
                else 
+               {
                    fisierXML2.createNewFile();
+                   mw.getViewsPanel().getXmlView().setDefaultText();
+               }
             }
-          
+        }
+        }
+            else
+            {
+                int n = JOptionPane.showConfirmDialog(mw,
+                "Do you want to save the existing data? ",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               saveBtnPressed();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                             
+                               return;
+                           case JOptionPane.NO_OPTION:
+                               newDialog.doModal();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               mw.getViewsPanel().getXmlView().setDefaultText();
+                               mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                               
+                              
+                           case JOptionPane.CLOSED_OPTION:
+                           case JOptionPane.CANCEL_OPTION:
+                          
+                       }
+            }
+                
     } 
-     
-// automatic go mouse to xml view
-
-}
-            
-            
-
-    private void openBtnPressed() {
+      
+ 
+    private void openBtnPressed() throws FileNotFoundException, IOException {
         Open open = new Open(this, ".xml", "Extensible Markup Language (.XML)");
-        open.doModal();
+        //open.doModal();
+        
+        if(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+        {
+             
+            open.doModal();
+            if(open.isSet()){
+          
+            // 
+            //  mw.setCurrentFilePath(newDialog.getPath());
+            File fisierXML = new File(open.getPath());
+            Scanner input = new Scanner(fisierXML);
+            //fisierXML1 = fisierXML;
+            
+           while(input.hasNext())
+           {
+               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).append(input.nextLine()+"\n");
+               
+           }
+            
+        }
+        }
+            else
+            {
+                int n = JOptionPane.showConfirmDialog(mw,
+                "Do you want to save the existing data? ",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               saveBtnPressed();
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                             //  mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                             
+                               return;
+                           case JOptionPane.NO_OPTION:
+                               open.doModal();
+                               
+                               ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               System.out.println("---------");
+                              // mw.getViewsPanel().getXmlView().setDefaultText();
+                              // mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                               File fisierXML1 = new File(open.getPath());
+                               Scanner input = new Scanner(fisierXML1);
+                               
+                                 while(input.hasNext())
+                                 {
+                                    ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).append(input.nextLine()+"\n");
+               
+                                   }
+                              
+                           case JOptionPane.CLOSED_OPTION:
+                           case JOptionPane.CANCEL_OPTION:
+                          
+                       }
+            }
+        /*((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
         if(open.isSet()){
             mw.setCurrentFilePath(open.getPath());
+            File fisierXML = new File (open.getPath());
+           
+               }*/
         }
-    }
 
-    private void saveBtnPressed() {
+
+    private void saveBtnPressed() throws IOException {
         Save save = new Save(this, ".xml", "Extensible Markup Language (.XML)");
-        save.doModal();
+        //save.doModal();
+        if(!((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+        {
+             
+            save.doModal();
+            if(save.isSet()){
+          
+            // 
+            //  mw.setCurrentFilePath(newDialog.getPath());
+            File fisierXML = new File(save.getPath());
+            if(save.getPath().contains(".xml"))
+            { 
+                //fisierXML1 = fisierXML;
+                if(!fisierXML.createNewFile())
+               {
+              
+                int n = JOptionPane.showConfirmDialog(mw,
+                "The file already exist. \nDo you want to overwrite? ",
+                "Existing file",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               fisierXML.delete();
+                               fisierXML.createNewFile();
+                               PrintWriter pr = new PrintWriter(fisierXML);
+                               pr.print(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText());
+                                //mw.getViewsPanel().getXmlView().setDefaultText();
+                                //mw.getViewsPanel().getXmlView().setName(fisierXML.getName());
+                               pr.close();
+                              return;
+                           case JOptionPane.NO_OPTION:
+                               save.doModal();
+                               fisierXML.delete();
+                               fisierXML.createNewFile();
+                               pr = new PrintWriter(fisierXML);
+                               pr.print(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText());
+                               pr.close();
+                           case JOptionPane.CLOSED_OPTION:
+                              
+                           case JOptionPane.CANCEL_OPTION:
+                               
+                               
+                       }
+                }   
+                else{
+                    fisierXML.createNewFile();
+                                PrintWriter pr = new PrintWriter(fisierXML);
+                               pr.print(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText());
+                               pr.close();
+                }
+           
+                    
+               }
+            
+            else
+            {
+               File fisierXML2 = new File(fisierXML.getPath()+".xml");
+              //  System.out.println(fisierXML2.getName());
+               if(!fisierXML2.createNewFile())
+               {
+                    
+                   int n = JOptionPane.showConfirmDialog(mw,
+                "The file already exist. \nDo you want to overwrite? ",
+                "Existing file",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               //File fisierExistent = new File(fisierXML.getPath()+".xml");
+                               fisierXML.delete();
+                               fisierXML2.delete();
+                               fisierXML2.createNewFile();
+                               PrintWriter pr = new PrintWriter(fisierXML2);
+                               pr.print(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText());
+                               pr.close();
+                              // mw.getViewsPanel().getXmlView().setDefaultText();
+                              // mw.getViewsPanel().getXmlView().setName(fisierXML2.getName());
+                              
+                               return;
+                           case JOptionPane.NO_OPTION:
+                               newBtnPressed();
+                               return;
+                           case JOptionPane.CLOSED_OPTION:
+                               return;
+                           case JOptionPane.CANCEL_OPTION: 
+                               newBtnPressed();
+                            
+                       }
+                }
+               else 
+               {
+                   fisierXML2.createNewFile();
+                                PrintWriter pr = new PrintWriter(fisierXML2);
+                               pr.print(((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText());
+                               pr.close();
+                  // mw.getViewsPanel().getXmlView().setDefaultText();
+               }
+            }
+        }
+        }
+            else
+            {
+                int n = JOptionPane.showConfirmDialog(mw,
+                "Your XMLView is empty.Do you want to save? ",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION
+                );
+                switch(n){
+                           case JOptionPane.YES_OPTION:
+                               save.doModal();
+                               if(save.getPath().contains(".xml"))
+                               {
+                                File fisierXML2 = new File(save.getPath());
+                                fisierXML2.createNewFile();
+                              // ((JTextArea)(mw.getViewsPanel().getXmlView().getView())).setText(null);
+                               //mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
+                               }
+                               else
+                               {
+                                   File fisierXML2 = new File(save.getPath()+ ".xml");
+                                   fisierXML2.createNewFile();
+                               }
+                             
+                           case JOptionPane.NO_OPTION:   
+                           case JOptionPane.CLOSED_OPTION:
+                           case JOptionPane.CANCEL_OPTION:
+                          
+                       }
+            }
+                
         //save.setDialogTitle("Create");
-        if(save.isSet()){
+       /* if(save.isSet()){
             mw.setCurrentFilePath(save.getPath());
         }
+               */
+    }
+
+    public JButton getBtn1() {
+        return btn1;
+    }
+
+    public void setBtn1(JButton btn1) {
+        this.btn1 = btn1;
+    }
+
+    public JButton getBtn2() {
+        return btn2;
+    }
+
+    public void setBtn2(JButton btn2) {
+        this.btn2 = btn2;
+    }
+
+    public JButton getBtn3() {
+        return btn3;
+    }
+
+    public void setBtn3(JButton btn3) {
+        this.btn3 = btn3;
+    }
+
+    public JButton getBtn4() {
+        return btn4;
+    }
+
+    public void setBtn4(JButton btn4) {
+        this.btn4 = btn4;
+    }
+
+    public JButton getBtn5() {
+        return btn5;
+    }
+
+    public void setBtn5(JButton btn5) {
+        this.btn5 = btn5;
     }
 }
