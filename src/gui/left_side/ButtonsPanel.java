@@ -138,7 +138,7 @@ public class ButtonsPanel extends JPanel {
                     }
                 }
             });
-            // --- KeyEvent pentru combinatia CTRL+O ------------------
+            // --- KeyEvent pentru combinatia CTRL+S ------------------
                     KeyStroke tastaCtrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
 
                     getInputMap(focusPeFereastra).put(tastaCtrlS, "SAVE");
@@ -171,7 +171,7 @@ public class ButtonsPanel extends JPanel {
                 }
             });
 
-            // --- KeyEvent pentru combinatia CTRL+O ------------------
+            // --- KeyEvent pentru combinatia CTRL+F5 ------------------
                     KeyStroke tastaCtrlF5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, InputEvent.CTRL_DOWN_MASK);
 
                     getInputMap(focusPeFereastra).put(tastaCtrlF5, "VALIDATE");
