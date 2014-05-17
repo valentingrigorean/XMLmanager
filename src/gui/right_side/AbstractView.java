@@ -13,7 +13,12 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public abstract class AbstractView extends JPanel {
 
@@ -23,6 +28,10 @@ public abstract class AbstractView extends JPanel {
     protected FlowLabel label;   
     protected ArrayList<Observer> observers;
     protected MainWindow mw;
+
+    public MainWindow getMw() {
+        return mw;
+    }
 
     public AbstractView() {       
         init();
@@ -71,7 +80,11 @@ public abstract class AbstractView extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnExitPressed();
+                try {
+                    btnExitPressed();
+                } catch (IOException ex) {
+                    Logger.getLogger(AbstractView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -87,7 +100,5 @@ public abstract class AbstractView extends JPanel {
         this.observers = new ArrayList<>();
     }
 
-    private void btnExitPressed() {
-        this.notifyObservers();
-    }    
+    abstract public void btnExitPressed() throws IOException;    
 }

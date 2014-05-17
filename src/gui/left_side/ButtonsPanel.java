@@ -495,7 +495,7 @@ public class ButtonsPanel extends JPanel {
         }
     }
 
-    private void saveBtnPressed() throws IOException {
+    public void saveBtnPressed() throws IOException {
         Save save = new Save(this, ".xml", "Extensible Markup Language (.XML)");
         //save.doModal();
         if (!((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText().isEmpty()) {

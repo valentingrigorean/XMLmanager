@@ -1,6 +1,7 @@
 package gui.right_side;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -23,4 +24,10 @@ public class TextView extends AbstractView {
         scrollPane = new JScrollPane(view);
         super.add(view, BorderLayout.CENTER);
     }   
+
+    @Override
+    public void btnExitPressed() throws IOException {
+         this.notifyObservers();
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

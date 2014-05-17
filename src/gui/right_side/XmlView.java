@@ -1,6 +1,8 @@
 package gui.right_side;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.ToolTipManager;
 import org.fife.rsta.ac.LanguageSupportFactory;
@@ -16,6 +18,7 @@ public class XmlView extends AbstractView {
 
     @Override
     public void parse() {
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -29,6 +32,7 @@ public class XmlView extends AbstractView {
     public void setDefaultText() {
         ((JTextArea) (this.view)).insert("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", 0);
     }
+    
 
     private RSyntaxTextArea createTextArea() {
         RSyntaxTextArea textArea = new RSyntaxTextArea(25, 80);
@@ -43,4 +47,26 @@ public class XmlView extends AbstractView {
         ToolTipManager.sharedInstance().registerComponent(textArea);
         return textArea;
     }
-}
+
+    @Override
+    public void btnExitPressed() throws IOException {
+         if(!((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
+         {
+        int n = JOptionPane.showConfirmDialog(mw,
+                    "Do you want to save the existing data? ",
+                    "Save",
+                    JOptionPane.YES_NO_CANCEL_OPTION
+            );
+            switch (n) {
+                case JOptionPane.YES_OPTION:
+                    mw.getLeftSidePanel().getButtonsPanel().saveBtnPressed();
+                    return;
+                case JOptionPane.NO_OPTION:
+                case JOptionPane.CANCEL_OPTION:
+                 }
+         }
+        this.notifyObservers();
+       
+    }
+    }
+
