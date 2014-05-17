@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,10 +20,13 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 public class ButtonsPanel extends JPanel {
 
@@ -45,65 +50,174 @@ public class ButtonsPanel extends JPanel {
         this.setPreferredSize(new Dimension(300, 300));
         this.setLayout(new GridLayout(5, 1));
 
-        btn1 = new JButton("New");
-        btn1.addActionListener(new ActionListener() {
+       int focusPeFereastra = JComponent.WHEN_IN_FOCUSED_WINDOW; //tine cont daca e fereastra activata
+        
+        // --- NEW BUTTON ------------------------------------------------------------------------------
+            btn1 = new JButton("New");
+            btn1.setAction(new AbstractAction(btn1.getActionCommand()) {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    newBtnPressed();
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        newBtnPressed();
 
-                } catch (IOException ex) {
-                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        });
+            });
+            // --- KeyEvent pentru combinatia CTRL+N ------------------
+                KeyStroke tastaCtrlN = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
 
-        btn2 = new JButton("Open");
-        btn2.addActionListener(new ActionListener() {
+                getInputMap(focusPeFereastra).put(tastaCtrlN, "NEW");
+                getActionMap().put("NEW", btn1.getAction());
+            // --------------------------------------------------------
+        
+            
+            /*
+            btn1.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    try {
+                        newBtnPressed();
 
-                try {
-                    openBtnPressed();
-                } catch (IOException ex) {
-                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        });
+            });*/
+        // ---------------------------------------------------------------------------------------------
+                
+        // --- OPEN BUTTON -----------------------------------------------------------------------------
+            btn2 = new JButton("Open");
 
-        btn3 = new JButton("Save as");
-        btn3.addActionListener(new ActionListener() {
+            btn2.setAction(new AbstractAction(btn2.getActionCommand()) {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    saveBtnPressed();
-                } catch (IOException ex) {
-                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        openBtnPressed();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        });
+            });
+            // --- KeyEvent pentru combinatia CTRL+O ------------------
+                    KeyStroke tastaCtrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
 
-        btn4 = new JButton("Validate");
-        btn4.addActionListener(new ActionListener() {
+                    getInputMap(focusPeFereastra).put(tastaCtrlO, "OPEN");
+                    getActionMap().put("OPEN", btn2.getAction());
+            // --------------------------------------------------------
+            /*
+            btn2.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                // System.exit(0);
-            }
+                @Override
+                public void actionPerformed(ActionEvent ae) {
 
-        });
-        btn5 = new JButton("Help");
-        btn5.addActionListener(new ActionListener() {
+                    try {
+                        openBtnPressed();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });*/
+        // ---------------------------------------------------------------------------------------------
+              
+        // --- SAVE BUTTON -----------------------------------------------------------------------------
+            btn3 = new JButton("Save as");
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                helpButtonPressed();
-            }
+            btn3.setAction(new AbstractAction(btn3.getActionCommand()) {
 
-        });
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        saveBtnPressed();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            // --- KeyEvent pentru combinatia CTRL+O ------------------
+                    KeyStroke tastaCtrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
+
+                    getInputMap(focusPeFereastra).put(tastaCtrlS, "SAVE");
+                    getActionMap().put("SAVE", btn3.getAction());
+            // --------------------------------------------------------
+            /*
+            btn3.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    try {
+                        saveBtnPressed();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            */
+        // ---------------------------------------------------------------------------------------------
+            
+        // --- SAVE BUTTON -----------------------------------------------------------------------------
+            btn4 = new JButton("Validate");
+
+            btn4.setAction(new AbstractAction(btn4.getActionCommand()) {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   // urmeaza a fi implementat
+                    System.out.println("validare");
+                }
+            });
+
+            // --- KeyEvent pentru combinatia CTRL+O ------------------
+                    KeyStroke tastaCtrlF5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, InputEvent.CTRL_DOWN_MASK);
+
+                    getInputMap(focusPeFereastra).put(tastaCtrlF5, "VALIDATE");
+                    getActionMap().put("VALIDATE", btn4.getAction());
+            // --------------------------------------------------------
+
+            /*
+            btn4.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                   // System.exit(0);
+                }
+
+            });
+            */
+        // ---------------------------------------------------------------------------------------------
+        
+        // --- NEW BUTTON ------------------------------------------------------------------------------
+        
+            btn5 = new JButton("Help");
+            btn5.setAction(new AbstractAction(btn5.getActionCommand()) {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    helpButtonPressed();
+                }
+            });
+            // --- KeyEvent pentru butonul F1 -------------------------
+               // int focusPeFereastra = JComponent.WHEN_IN_FOCUSED_WINDOW;
+                KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.CTRL_DOWN_MASK);
+
+                getInputMap(focusPeFereastra).put(tastaF1, "PRESS");
+                getActionMap().put("PRESS", btn5.getAction());
+            // --------------------------------------------------------
+
+            /*
+            btn5.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                   helpButtonPressed();
+                }
+
+            });*/
+        // ---------------------------------------------------------------------------------------------
 
         this.add(btn1);
         this.add(btn2);
