@@ -15,7 +15,12 @@ import javax.swing.JFileChooser;
  */
 public class New extends AbstractDialog {
    
-    
+     private int option = 1;
+
+    public int getOption() {
+        return option;
+    }
+     
      public New(Component comp, String ext, String desc) {
         path = null;
         this.comp = comp;
@@ -27,7 +32,10 @@ public class New extends AbstractDialog {
         
         if (showDialog(comp,"New") == JFileChooser.APPROVE_OPTION) {
             path = getSelectedFile().toString();
+            option = JFileChooser.APPROVE_OPTION;
             
         }
+
+        
     }
 }
