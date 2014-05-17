@@ -12,35 +12,26 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import gui.Update;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public abstract class AbstractView extends JPanel {
 
-    protected JComponent view;   
+    protected JComponent view;
+    protected JComponent scrollPane;
     protected JButton btnExit;
-    protected FlowLabel label;
-    protected Update update;
+    protected FlowLabel label;   
     protected ArrayList<Observer> observers;
     protected MainWindow mw;
-    
 
-    public AbstractView(JComponent view, String text) {
-        super();
-        this.view = view;
-        label = new FlowLabel(text);
+    public AbstractView() {       
         init();
     }
-    public void setLabel(String text) {
-        label = new FlowLabel(text);
-        init();
-    }
-    
+
     public JComponent getView() {
         return view;
-    }   
+    }
 
     public void addObserver(Observer obs) {
         if (!observers.contains(obs)) {
@@ -56,7 +47,7 @@ public abstract class AbstractView extends JPanel {
         for (Observer obs : observers) {
             obs.update(null, this);
         }
-    }   
+    }
 
     public void setMainWindow(MainWindow mw) {
         this.mw = mw;
@@ -65,7 +56,8 @@ public abstract class AbstractView extends JPanel {
     public void addPopMenu(Menu menu) {
         this.setComponentPopupMenu(menu);
         view.setComponentPopupMenu(menu);
-    }
+    }    
+   
 
     public abstract void parse();
 
@@ -74,32 +66,31 @@ public abstract class AbstractView extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
 
         this.setLayout(new BorderLayout());
-        
-        btnExit = new JButton("x");       
-        btnExit.addActionListener(new ActionListener(){
+
+        btnExit = new JButton("x");
+        btnExit.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 btnExitPressed();
             }
         });
-        
-        JPanel p = new JPanel();       
+
+        label = new FlowLabel();
+
+        JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
-        p.add(label,BorderLayout.CENTER);
-        p.add(btnExit,BorderLayout.EAST);
-        
+        p.add(label, BorderLayout.CENTER);
+        p.add(btnExit, BorderLayout.EAST);
 
-        this.add(p, BorderLayout.NORTH);
-        this.add(new JScrollPane(view), BorderLayout.CENTER);
-
-        this.update = new Update();
+        this.add(p, BorderLayout.NORTH);       
+       
         this.observers = new ArrayList<>();
     }
-    
-    private void btnExitPressed(){
+
+    private void btnExitPressed() {
         this.notifyObservers();
     }
-    
+
     abstract public void setInput(AbstractView absView);
 }

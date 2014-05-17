@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
+import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 public class ViewsPanel extends JPanel implements Observer {
 
@@ -97,7 +99,7 @@ public class ViewsPanel extends JPanel implements Observer {
             case 1:
                 this.add(treeView);
         }
-    }
+    }   
 
     private void init() {
         textView = new TextView();
@@ -115,10 +117,12 @@ public class ViewsPanel extends JPanel implements Observer {
         textView.addObserver(this);
         xmlView.addObserver(this);
         treeView.addObserver(this);
+        
+        ((XmlOutlineTree)treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());        
+        treeView.revalidate();
 
         this.add(textView);
         this.add(xmlView);
         this.add(treeView);
-    }
-
+    }   
 }

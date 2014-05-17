@@ -1,14 +1,16 @@
 package gui.right_side;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import javax.swing.JTextArea;
-import javax.swing.text.DefaultHighlighter;
+import javax.swing.ToolTipManager;
+import org.fife.rsta.ac.LanguageSupportFactory;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
-public class XmlView extends AbstractView {
-    
+public class XmlView extends AbstractView {   
 
     public XmlView() {
-        super(new JTextArea(), "XMLView");
+        super();
         init();
     }
 
@@ -18,17 +20,32 @@ public class XmlView extends AbstractView {
     }
 
     private void init() {
-       
+        view = createTextArea();
+        label.setText("XMLEditor");
+        scrollPane = new RTextScrollPane(view,true);
+        super.add(scrollPane,BorderLayout.CENTER);
     }
 
     @Override
     public void setInput(AbstractView absView) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public void setDefaultText()
-    {
-       // ((JTextArea)(this.view)).append("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n \n <root> \n </root>");
-        ((JTextArea)(this.view)).insert("<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n \n <root> \n </root>",0);
+
+    public void setDefaultText() {
+        ((JTextArea) (this.view)).insert("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", 0);
+    }
+
+    private RSyntaxTextArea createTextArea() {
+        RSyntaxTextArea textArea = new RSyntaxTextArea(25, 80);
+        LanguageSupportFactory.get().register(textArea);
+        textArea.setCaretPosition(0);
+        textArea.requestFocusInWindow();
+        textArea.setMarkOccurrences(true);
+        textArea.setCodeFoldingEnabled(true);
+        textArea.setTabsEmulated(true);
+        textArea.setTabSize(3);
+        textArea.setSyntaxEditingStyle("text/xml");
+        ToolTipManager.sharedInstance().registerComponent(textArea);
+        return textArea;
     }
 }
