@@ -478,7 +478,7 @@ public class ButtonsPanel extends JPanel {
                     {
                         ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
                     
-                       
+
                     // mw.getViewsPanel().getXmlView().setDefaultText();
                     // mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
                     File fisierXML1 = new File(open.getPath());
@@ -486,7 +486,7 @@ public class ButtonsPanel extends JPanel {
                     Scanner input1 = new Scanner(fisierXML1);
                     
                     while (input1.hasNext()) {
-                        
+
                         ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input1.nextLine() + "\n");
 
                     }
