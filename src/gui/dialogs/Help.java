@@ -28,7 +28,7 @@ public class Help extends JFrame implements ActionListener{
     public Help(){
         //constructor simplu, neparametrizat
     }
-	    
+    
     public Help(String titluFereastra, URL adresaFisierIN) {
 
         super(titluFereastra);
@@ -41,8 +41,10 @@ public class Help extends JFrame implements ActionListener{
         try {
             editorPanel.setPage(adresaFisier);
         } catch (IOException ex) {
+            
             ex.printStackTrace();
         }
+        
         //adaug html listener pe editorPanel pentru a afisa fisierele html automat
         editorPanel.addHyperlinkListener(new HyperlinkListener() {
             @Override
@@ -66,7 +68,7 @@ public class Help extends JFrame implements ActionListener{
             //setDefaultCloseOperation(EXIT_ON_CLOSE);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE); //inchid doar fereastra help
       
-            setSize(new Dimension(600, 700));
+            setSize(new Dimension(600, 650));
             setLocationRelativeTo(null); //afisare in centrul ecranului
             setVisible(true);
         // ------------------------------------------------------
