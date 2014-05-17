@@ -7,7 +7,6 @@
 package xml;
 
 import gui.MainWindow;
-import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
