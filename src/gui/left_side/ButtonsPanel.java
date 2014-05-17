@@ -202,8 +202,8 @@ public class ButtonsPanel extends JPanel {
             });
             // --- KeyEvent pentru butonul F1 -------------------------
                // int focusPeFereastra = JComponent.WHEN_IN_FOCUSED_WINDOW;
-                KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.CTRL_DOWN_MASK);
-
+                KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);
+                //int test = KeyEvent.VK_F1;
                 getInputMap(focusPeFereastra).put(tastaF1, "PRESS");
                 getActionMap().put("PRESS", btn5.getAction());
             // --------------------------------------------------------
