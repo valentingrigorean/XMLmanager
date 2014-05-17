@@ -28,9 +28,4 @@ public class TreeView extends AbstractView {
     public void setInput(AbstractView absView) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public void removeAll() {
-        ((XmlOutlineTree) view).removeAll();
-    }
-
 }
