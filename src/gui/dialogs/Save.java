@@ -6,6 +6,11 @@ import javax.swing.JFileChooser;
 
 public class Save extends AbstractDialog {
 
+    private int option = 1;
+
+    public int getOption() {
+        return option;
+    }
     public Save(Component comp, String ext, String desc) {
 
         path = null;
@@ -17,6 +22,7 @@ public class Save extends AbstractDialog {
     public void doModal() {
         if (showSaveDialog(comp) == JFileChooser.APPROVE_OPTION) {
             path = getSelectedFile().toString();
+            option =  JFileChooser.APPROVE_OPTION;
         }
     }
 }

@@ -66,6 +66,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void init() {
            leftSidePanel.setMainWindow(this);
            rightSidePanel.setMainWindow(this);
+           //leftSidePanel.getButtonsPanel().linkRecentFilesPanel(".");
     }
 
     public void setCurrentFilePath(String path) {
