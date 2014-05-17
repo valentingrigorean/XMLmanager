@@ -17,9 +17,9 @@ public class ViewsPanel extends JPanel implements Observer {
     private int currItems = 0x7;
     private MainWindow mw;
     private final Menu menu = new Menu(this);
-
-    public final static int TEXT_VIEW = 2;
-    public final static int XML_VIEW = 1;
+    
+    public final static int XML_VIEW = 2;
+    public final static int TEXT_VIEW = 1;
     public final static int TREE_VIEW = 0;
 
     public ViewsPanel() {
@@ -67,8 +67,9 @@ public class ViewsPanel extends JPanel implements Observer {
 
     public void setMainWindow(MainWindow mw) {
         this.mw = mw;
-        textView.setMainWindow(mw);
+        
         xmlView.setMainWindow(mw);
+        textView.setMainWindow(mw);
         treeView.setMainWindow(mw);
     }
 
@@ -87,13 +88,13 @@ public class ViewsPanel extends JPanel implements Observer {
         this.removeAll();
         switch (currItems) {
             case 7:
-                this.add(textView);
                 this.add(xmlView);
+                this.add(textView);
                 this.add(treeView);
                 return;
             case 6:
-                this.add(textView);
                 this.add(xmlView);
+                this.add(textView);
                 return;
             case 5:
                 this.add(textView);
@@ -115,27 +116,27 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     private void init() {
+        xmlView = new XmlView();
         textView = new TextView();
         treeView = new TreeView();
-        xmlView = new XmlView();
 
         this.setLayout(new GridLayout(1, 3));
 
         this.setComponentPopupMenu(menu);
-
+        
+        xmlView.addPopMenu(menu);
         textView.addPopMenu(menu);
         treeView.addPopMenu(menu);
-        xmlView.addPopMenu(menu);
-
-        textView.addObserver(this);
+        
         xmlView.addObserver(this);
+        textView.addObserver(this);
         treeView.addObserver(this);
 
         ((XmlOutlineTree) treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());
         treeView.revalidate();
-
-        this.add(textView);
+        
         this.add(xmlView);
+        this.add(textView);
         this.add(treeView);
     }
 }

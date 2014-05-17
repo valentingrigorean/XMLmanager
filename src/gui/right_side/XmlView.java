@@ -50,21 +50,20 @@ public class XmlView extends AbstractView {
 
     @Override
     public void btnExitPressed() throws IOException {
-         if(!((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty())
-         {
-        int n = JOptionPane.showConfirmDialog(mw,
-                    "Do you want to save the existing data? ",
-                    "Save",
-                    JOptionPane.YES_NO_CANCEL_OPTION
-            );
-            switch (n) {
-                case JOptionPane.YES_OPTION:
-                    mw.getLeftSidePanel().getButtonsPanel().saveBtnPressed();
-                    return;
-                case JOptionPane.NO_OPTION:
-                case JOptionPane.CANCEL_OPTION:
-                 }
-         }
+        if(!((JTextArea)(mw.getViewsPanel().getXmlView().getView())).getText().isEmpty()) {
+           int n = JOptionPane.showConfirmDialog(mw,
+                   "Do you want to save the existing data? ",
+                   "Save",
+                   JOptionPane.YES_NO_CANCEL_OPTION
+           );
+           switch (n) {
+               case JOptionPane.YES_OPTION:
+                   mw.getLeftSidePanel().getButtonsPanel().saveBtnPressed();
+                   return;
+               case JOptionPane.NO_OPTION:
+               case JOptionPane.CANCEL_OPTION:
+                }
+        }
         this.notifyObservers();
        
     }
