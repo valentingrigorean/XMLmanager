@@ -18,8 +18,8 @@ public class ViewsPanel extends JPanel implements Observer {
     private MainWindow mw;
     private final Menu menu = new Menu(this);
     
-    public final static int XML_VIEW = 2;
-    public final static int TEXT_VIEW = 1;
+    public final static int TEXT_VIEW = 2;
+    public final static int XML_VIEW = 1;
     public final static int TREE_VIEW = 0;
 
     public ViewsPanel() {
@@ -108,10 +108,11 @@ public class ViewsPanel extends JPanel implements Observer {
                 this.add(treeView);
                 return;
             case 2:
-                this.add(xmlView);
+                this.add(treeView);
                 return;
             case 1:
-                this.add(treeView);
+                
+                this.add(xmlView);
         }
     }
 
