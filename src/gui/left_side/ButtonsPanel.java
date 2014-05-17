@@ -467,27 +467,31 @@ public class ButtonsPanel extends JPanel {
                             ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input.nextLine() + "\n");
 
                         }
-
+                       input.close();
                     }
                              //  mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
 
-                    return;
+                 
                 case JOptionPane.NO_OPTION:
                     open.doModal();
-                    if (open.getOption() != 1) {
+                    if(open.isSet())
+                    {
                         ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
-                    }
-                              // System.out.println("---------");
+                    
+                       
                     // mw.getViewsPanel().getXmlView().setDefaultText();
                     // mw.getViewsPanel().getXmlView().setName(fisierXML1.getName());
                     File fisierXML1 = new File(open.getPath());
-                    Scanner input = new Scanner(fisierXML1);
-
-                    while (input.hasNext()) {
-                        ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input.nextLine() + "\n");
+                    
+                    Scanner input1 = new Scanner(fisierXML1);
+                    
+                    while (input1.hasNext()) {
+                        
+                        ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input1.nextLine() + "\n");
 
                     }
-
+                    input1.close();
+                    }
                 case JOptionPane.CLOSED_OPTION:
                 case JOptionPane.CANCEL_OPTION:
 
