@@ -18,8 +18,8 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        leftSidePanel = new gui.left_side.LeftSidePanel();
-        rightSidePanel = new gui.right_side.ViewsPanel();
+        leftSidePanel = new gui.left_side.LeftSidePanel(this);
+        rightSidePanel = new gui.right_side.ViewsPanel(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
