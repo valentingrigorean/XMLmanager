@@ -24,13 +24,19 @@ public abstract class AbstractView extends JPanel {
     protected ArrayList<Observer> observers;
     protected MainWindow mw;
     protected Update update;
+    protected boolean docListener;
 
     public MainWindow getMw() {
         return mw;
     }
 
     public AbstractView() {
+        this.docListener = false;
         init();
+    }
+
+    public void setDocumentListener(boolean b) {
+        docListener = b;
     }
 
     public JComponent getView() {
@@ -64,7 +70,7 @@ public abstract class AbstractView extends JPanel {
 
     private void init() {
         update = new Update(this, -1);
-        
+
         this.setPreferredSize(new Dimension(300, 300));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         this.setLayout(new BorderLayout());
