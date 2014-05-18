@@ -39,6 +39,7 @@ public class NewDialogIO implements IDialogIO {
                         show();
                 }
             }
+            return;
         }
         switch (ConfirmPane.doModal(mw, "Save", "Do you want to save the existing data? ")) {
             case JOptionPane.YES_OPTION:
