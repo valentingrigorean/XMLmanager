@@ -75,7 +75,7 @@ public class ButtonsPanel extends JPanel {
                 OpenDialogIO io = new OpenDialogIO(mw);
                 io.show();
             }
-        });        
+        });
         KeyStroke tastaCtrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
         getInputMap(focusPeFereastra).put(tastaCtrlO, "OPEN");
         getActionMap().put("OPEN", btn2.getAction());
@@ -106,8 +106,8 @@ public class ButtonsPanel extends JPanel {
         });
         KeyStroke tastaCtrlF5 = KeyStroke.getKeyStroke(KeyEvent.VK_F5, InputEvent.CTRL_DOWN_MASK);
         getInputMap(focusPeFereastra).put(tastaCtrlF5, "VALIDATE");
-        getActionMap().put("VALIDATE", btn4.getAction());        
-        
+        getActionMap().put("VALIDATE", btn4.getAction());
+
         // --- HELP BUTTON -----------------------------------------------------------------------------
         btn5 = new JButton("Help");
         btn5.setAction(new AbstractAction(btn5.getActionCommand()) {
@@ -115,12 +115,11 @@ public class ButtonsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 helpButtonPressed();
             }
-        });       
-        KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);       
+        });
+        KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);
         getInputMap(focusPeFereastra).put(tastaF1, "PRESS");
         getActionMap().put("PRESS", btn5.getAction());
-       
-        
+
         this.add(btn1);
         this.add(btn2);
         this.add(btn3);
@@ -174,10 +173,9 @@ public class ButtonsPanel extends JPanel {
     }
 
     public void helpButtonPressed() {
-
         URL index;
         Help fereastra = new Help();
-        index = fereastra.getClass().getClassLoader().getResource("./gui/help_files/index.html");
+        index = fereastra.getClass().getClassLoader().getResource("./ui/help_files/index.html");
         fereastra = new Help("Help", index);
     }
 }
