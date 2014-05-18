@@ -45,7 +45,9 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     public void setContent(String str) {
+        xmlView.setDocumentListener(false);
         ((JTextArea) xmlView.getView()).setText(str);
+        xmlView.setDocumentListener(true);
         reinvalidateViews();
     }
 
@@ -171,7 +173,7 @@ public class ViewsPanel extends JPanel implements Observer {
         }
     }
 
-    private void notifyViews(Update upd) {
+    private void notifyViews(Update upd) {            
         mw.setFileStatus(true);
     }
 }

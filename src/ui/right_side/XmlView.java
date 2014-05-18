@@ -9,12 +9,12 @@ import org.fife.rsta.ac.LanguageSupportFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-public class XmlView extends AbstractView { 
-    
+public class XmlView extends AbstractView {
+
     public XmlView() {
         super();
         init();
-    }  
+    }
 
     private RSyntaxTextArea createTextArea() {
         RSyntaxTextArea textArea = new RSyntaxTextArea(25, 80);
@@ -35,24 +35,31 @@ public class XmlView extends AbstractView {
         label.setText("XMLEditor");
         scrollPane = new RTextScrollPane(view, true);
         super.add(scrollPane, BorderLayout.CENTER);
-        ((JTextArea)view).getDocument().addDocumentListener(new DocumentListener(){
+        ((JTextArea) view).getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
-                update.setType(Update.INSERT_UPDATE);
-                notifyObservers();
+                if (docListener) {
+                    update.setType(Update.INSERT_UPDATE);
+                    notifyObservers();
+                }                
             }
 
             @Override
             public void removeUpdate(DocumentEvent de) {
-                update.setType(Update.REMOVE_UPDATE);
-                notifyObservers();
+                if (docListener) {
+                    update.setType(Update.REMOVE_UPDATE);
+                    notifyObservers();
+                }
             }
 
             @Override
             public void changedUpdate(DocumentEvent de) {
-                update.setType(Update.CHANGE_UPDATE);
-                notifyObservers();
+                if (docListener) {
+                    update.setType(Update.CHANGE_UPDATE);
+                    notifyObservers();
+                }
             }
-        });
-    }  
+        }
+        );
+    }
 }
