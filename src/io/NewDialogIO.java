@@ -23,6 +23,7 @@ public class NewDialogIO implements IDialogIO {
             if (newDialog.isSet()) {
                 if (!exists()) {
                     mw.setCurrentFilePath(newDialog.getPath());
+                    new DocumentWriter(newDialog.getPath(),"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
                     mw.getViewsPanel().setContent("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
                     mw.setFileStatus(false);
                     return;

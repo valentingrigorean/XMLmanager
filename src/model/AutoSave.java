@@ -28,8 +28,7 @@ public class AutoSave implements Runnable {
         thread.start();
     }
 
-    public void stop() {
-        saveFile();
+    public void stop() {        
         isRunning = true;
     }
 
@@ -37,8 +36,7 @@ public class AutoSave implements Runnable {
     @SuppressWarnings("SleepWhileInLoop")
     public void run() {
         while (isRunning) {
-            try {
-                saveFile();
+            try {               
                 Thread.sleep(SLEEP_TIME);
                 saveFile();
             } catch (InterruptedException ex) {
@@ -48,7 +46,7 @@ public class AutoSave implements Runnable {
     }
 
     private void saveFile() {
-        new DocumentWriter(path, mw.getContent());
+        new DocumentWriter(path+"~", mw.getContent());
         mw.setFileStatus(false);
     }
 }
