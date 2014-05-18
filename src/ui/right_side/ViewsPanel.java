@@ -1,7 +1,7 @@
 package ui.right_side;
 
 import ui.MainWindow;
-import ui.Menu;
+import ui.utils.Menu;
 import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;

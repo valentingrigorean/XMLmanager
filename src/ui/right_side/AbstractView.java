@@ -2,7 +2,7 @@ package ui.right_side;
 
 import ui.utils.FlowLabel;
 import ui.MainWindow;
-import ui.Menu;
+import ui.utils.Menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

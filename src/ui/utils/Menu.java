@@ -1,4 +1,4 @@
-package ui;
+package ui.utils;
 
 import ui.right_side.ViewsPanel;
 import java.awt.event.ActionEvent;
