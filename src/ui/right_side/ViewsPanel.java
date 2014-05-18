@@ -28,25 +28,20 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        System.out.println(currItems);
-        if (arg instanceof TextView) {
-            showPanel(TEXT_VIEW);
-            if (currItems != 4) {
-                menu.setSelected(TEXT_VIEW, false);
+    public void update(Observable o, Object arg) {       
+        if(arg instanceof Update){
+            switch(((Update)arg).getType()){
+                case Update.CHANGE_UPDATE:
+                case Update.INSERT_UPDATE:
+                case Update.REMOVE_UPDATE:
+                    notifyViews((Update) arg);
+                    return;
+                case Update.VIEW_CHANGE:
+                    hidePanels((Update) arg);
             }
-        } else if (arg instanceof TreeView) {
-            showPanel(TREE_VIEW);
-            if (currItems != 1) {
-                menu.setSelected(TREE_VIEW, false);
-            }
-        } else if (arg instanceof XmlView) {
-            showPanel(XML_VIEW);
-            if (currItems != 2) {
-                menu.setSelected(XML_VIEW, false);
-            }
-        }
-    }
+        }        
+    }    
+    
 
     public void setContent(String str) {
         ((JTextArea) xmlView.getView()).setText(str);
@@ -149,5 +144,28 @@ public class ViewsPanel extends JPanel implements Observer {
         this.add(textView);
 
         this.add(treeView);
+    }
+    
+    private void hidePanels(Update upd){
+        if (upd.getView() instanceof TextView) {
+            showPanel(TEXT_VIEW);
+            if (currItems != 4) {
+                menu.setSelected(TEXT_VIEW, false);
+            }
+        } else if (upd.getView()  instanceof TreeView) {
+            showPanel(TREE_VIEW);
+            if (currItems != 1) {
+                menu.setSelected(TREE_VIEW, false);
+            }
+        } else if (upd.getView() instanceof XmlView) {
+            showPanel(XML_VIEW);
+            if (currItems != 2) {
+                menu.setSelected(XML_VIEW, false);
+            }
+        }
+    }
+    
+    private void notifyViews(Update upd){
+        mw.setFileStatus(true);
     }
 }

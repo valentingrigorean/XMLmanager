@@ -33,9 +33,6 @@ public class OpenDialogIO implements IDialogIO {
                 mw.setFileStatus(false);
                 show();
                 break;
-            case JOptionPane.CLOSED_OPTION:
-            case JOptionPane.CANCEL_OPTION:
-                break;
         }
     }
 }

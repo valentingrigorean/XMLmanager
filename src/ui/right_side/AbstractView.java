@@ -23,6 +23,7 @@ public abstract class AbstractView extends JPanel {
     protected FlowLabel label;
     protected ArrayList<Observer> observers;
     protected MainWindow mw;
+    protected Update update;
 
     public MainWindow getMw() {
         return mw;
@@ -48,7 +49,7 @@ public abstract class AbstractView extends JPanel {
 
     public void notifyObservers() {
         for (Observer obs : observers) {
-            obs.update(null, this);
+            obs.update(null, update);
         }
     }
 
@@ -62,9 +63,10 @@ public abstract class AbstractView extends JPanel {
     }
 
     private void init() {
+        update = new Update(this, -1);
+        
         this.setPreferredSize(new Dimension(300, 300));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
-
         this.setLayout(new BorderLayout());
 
         btnExit = new JButton("x");
@@ -72,6 +74,7 @@ public abstract class AbstractView extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                update.setType(Update.VIEW_CHANGE);
                 notifyObservers();
             }
         });
