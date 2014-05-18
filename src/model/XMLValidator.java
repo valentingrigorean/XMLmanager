@@ -13,6 +13,7 @@ import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
@@ -30,10 +31,10 @@ public class XMLValidator {
      * 
      */
     
-    public static void Validate(String arg){
-        
+    public static void Validate(String arg)
+    {
         try {
-            File f = new File("XMLError.txt");
+            File f = new File("WellWritten.txt");
             f.delete();
             f.createNewFile();
             File f1 = new File("DtdError.txt");
@@ -55,7 +56,7 @@ public class XMLValidator {
             
             
             File f3 = new File(arg);
-            if (find(f3, "<!DOCTYPE")) {
+            if (find(f3, "<!DOCTYPE")&&find (f3,"SYSTEM")&&find(f3,".dtd")) {
                 
                 DTDValidate(arg);
                 
@@ -94,12 +95,11 @@ public class XMLValidator {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(true);
-
+        
         SAXParser parser = factory.newSAXParser();
 
         XMLReader reader = parser.getXMLReader();
      
-        //reader.setErrorHandler(new SimpleErrorHandler("WellWritten.txt"));
         reader.setErrorHandler(new XMLValidatorDisplayError("WellWritten.txt"));
         reader.parse(new InputSource(arg));
     }
@@ -114,7 +114,9 @@ public class XMLValidator {
         XMLReader reader = parser.getXMLReader();
 
      
-        reader.setErrorHandler(new XMLValidatorDisplayError("DtdError.txt"));
+     
+         ErrorHandler lenient = new XMLValidatorDisplayError("DtdError.txt");
+         reader.setErrorHandler(lenient);
         reader.parse(new InputSource(arg));
 
         return true;
@@ -130,7 +132,7 @@ public class XMLValidator {
         parser.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
 
         XMLReader reader = parser.getXMLReader();
-        
+      
         reader.setErrorHandler(new XMLValidatorDisplayError("XsdError.txt"));
         reader.parse(new InputSource(arg));
 
@@ -138,20 +140,16 @@ public class XMLValidator {
     }
 
     public static boolean find(File f, String searchString) {
-        
         boolean result = false;
         Scanner in = null;
-        
         try {
             in = new Scanner(new FileReader(f));
-            
             while (in.hasNextLine() && !result) {
                 result = in.nextLine().indexOf(searchString) >= 0;
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            
             try {
                 in.close();
             } catch (Exception e) { /* ignore */ }
