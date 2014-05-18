@@ -70,4 +70,16 @@
     nbproject/build-impl.xml file. 
 
     -->
+	<target name="-post-jar">
+		<jar jarfile="${dist.jar}" update="true">
+			<zipfileset src="${dist.jar}" excludes="META-INF/*" />
+			<zipfileset src="lib/autocomplete.jar" excludes="META-INF/*" />
+			<zipfileset src="lib/language_support.jar" excludes="META-INF/*" />
+			<zipfileset src="lib/rsyntaxtextarea.jar" excludes="META-INF/*" />
+			<manifest>
+				<attribute name="Main-Class" value="ui/MainWindow"/>
+			</manifest>
+                </jar>
+                <delete dir="dist/lib"/>
+	</target>       
 </project>

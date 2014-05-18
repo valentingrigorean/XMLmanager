@@ -1,22 +1,24 @@
 package model;
 
-
+import io.DocumentWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ui.MainWindow;
 
 public class AutoSave implements Runnable {
 
     private Thread thread;
     private String path;
     private boolean isRunning;
-
+    private final MainWindow mw;
     public final static int SLEEP_TIME = 600000;
 
-    public AutoSave(String path) {
+    public AutoSave(String path, MainWindow mw) {
         this.path = path;
+        this.mw = mw;
     }
-    
-    public void setFilePath(String path){
+
+    public void setFilePath(String path) {
         this.path = path;
     }
 
@@ -46,7 +48,7 @@ public class AutoSave implements Runnable {
     }
 
     private void saveFile() {
-        System.out.println("SAVING " + path + "~");
+        new DocumentWriter(path, mw.getContent());
+        mw.setFileStatus(false);
     }
-
 }
