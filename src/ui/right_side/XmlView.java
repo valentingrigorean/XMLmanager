@@ -9,18 +9,12 @@ import org.fife.rsta.ac.LanguageSupportFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-public class XmlView extends AbstractView {
-
-    private ViewsPanel views;
+public class XmlView extends AbstractView { 
     
     public XmlView() {
         super();
         init();
-    }
-    
-    public void setViewsPanel(ViewsPanel views){
-        this.views = views;
-    }
+    }  
 
     private RSyntaxTextArea createTextArea() {
         RSyntaxTextArea textArea = new RSyntaxTextArea(25, 80);
