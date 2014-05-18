@@ -1,11 +1,12 @@
 package ui.right_side;
 
+import java.awt.GridLayout;
 import ui.MainWindow;
 import ui.utils.Menu;
-import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -17,6 +18,7 @@ public class ViewsPanel extends JPanel implements Observer {
     private XmlView xmlView;
     private int currItems = 0x7;
     private MainWindow mw;
+    private JSplitPane splitPane1;    
     private final Menu menu = new Menu(this);
 
     public final static int TEXT_VIEW = 2;
@@ -28,9 +30,9 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {       
-        if(arg instanceof Update){
-            switch(((Update)arg).getType()){
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Update) {
+            switch (((Update) arg).getType()) {
                 case Update.CHANGE_UPDATE:
                 case Update.INSERT_UPDATE:
                 case Update.REMOVE_UPDATE:
@@ -39,9 +41,8 @@ public class ViewsPanel extends JPanel implements Observer {
                 case Update.VIEW_CHANGE:
                     hidePanels((Update) arg);
             }
-        }        
-    }    
-    
+        }
+    }
 
     public void setContent(String str) {
         ((JTextArea) xmlView.getView()).setText(str);
@@ -87,34 +88,38 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     private void rearrange() {
-        this.removeAll();
+        if (this.getComponent(0) != splitPane1) {
+            this.removeAll();
+            this.add(splitPane1);
+        }
         switch (currItems) {
             case 7:
-                this.add(xmlView);
-                this.add(textView);
-
-                this.add(treeView);
+                splitPane1.setLeftComponent(xmlView);
+                splitPane1.setRightComponent(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                        textView, treeView));
                 return;
             case 6:
-                this.add(xmlView);
-                this.add(textView);
-
+                splitPane1.setLeftComponent(xmlView);
+                splitPane1.setRightComponent(textView);
                 return;
             case 5:
-                this.add(textView);
-                this.add(treeView);
+                splitPane1.setLeftComponent(textView);
+                splitPane1.setRightComponent(treeView);
                 return;
             case 4:
+                this.removeAll();
                 this.add(textView);
                 return;
             case 3:
-                this.add(xmlView);
-                this.add(treeView);
+                splitPane1.setLeftComponent(xmlView);
+                splitPane1.setRightComponent(treeView);
                 return;
             case 2:
+                this.removeAll();
                 this.add(xmlView);
                 return;
             case 1:
+                this.removeAll();
                 this.add(treeView);
         }
     }
@@ -124,7 +129,11 @@ public class ViewsPanel extends JPanel implements Observer {
         treeView = new TreeView();
         xmlView = new XmlView();
 
-        this.setLayout(new GridLayout(1, 3));
+        splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, xmlView,
+                new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                        textView, treeView));        
+
+        this.setLayout(new GridLayout(1, 0));
 
         this.setComponentPopupMenu(menu);
 
@@ -140,19 +149,16 @@ public class ViewsPanel extends JPanel implements Observer {
         ((XmlOutlineTree) treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());
         treeView.revalidate();
 
-        this.add(xmlView);
-        this.add(textView);
-
-        this.add(treeView);
+        this.add(splitPane1);
     }
-    
-    private void hidePanels(Update upd){
+
+    private void hidePanels(Update upd) {
         if (upd.getView() instanceof TextView) {
             showPanel(TEXT_VIEW);
             if (currItems != 4) {
                 menu.setSelected(TEXT_VIEW, false);
             }
-        } else if (upd.getView()  instanceof TreeView) {
+        } else if (upd.getView() instanceof TreeView) {
             showPanel(TREE_VIEW);
             if (currItems != 1) {
                 menu.setSelected(TREE_VIEW, false);
@@ -164,8 +170,8 @@ public class ViewsPanel extends JPanel implements Observer {
             }
         }
     }
-    
-    private void notifyViews(Update upd){
+
+    private void notifyViews(Update upd) {
         mw.setFileStatus(true);
     }
 }
