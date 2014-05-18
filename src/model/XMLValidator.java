@@ -31,6 +31,7 @@ public class XMLValidator {
      * 
      */
     
+    
     public static void Validate(String arg)
     {
         try {
@@ -123,7 +124,6 @@ public class XMLValidator {
     }
 
     public static boolean XSDValidate(String arg) throws ParserConfigurationException, SAXNotRecognizedException, SAXNotSupportedException, SAXException, IOException {
-        
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(true);
         factory.setNamespaceAware(true);
