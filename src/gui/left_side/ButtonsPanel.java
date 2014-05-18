@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import model.XMLValidator;
 
 public class ButtonsPanel extends JPanel {
 
@@ -166,8 +167,11 @@ public class ButtonsPanel extends JPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   // urmeaza a fi implementat
-                    System.out.println("validare");
+                    try {
+                        validateButtonPressed();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
@@ -622,6 +626,49 @@ public class ButtonsPanel extends JPanel {
          */
     }
 
+    public void validateButtonPressed() throws IOException{
+        
+        String fromXMLView = ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText();
+        //System.out.println(fromXMLView);
+        
+        PrintWriter out = new PrintWriter("tempFileValidate.xml");
+        
+        if (((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText().isEmpty()) {
+            
+            Open open = new Open(this, ".xml", "Extensible Markup Language (.XML)");
+            
+            int xmlViewGolDialog = JOptionPane.showConfirmDialog(null, "The xml View panel is empty ! \nDo you want to open an existing xml file ?", "Attention !", JOptionPane.YES_NO_OPTION);
+            
+            if (xmlViewGolDialog == JOptionPane.YES_OPTION) {
+                
+                open.doModal();
+                if (open.getOption() != 1) {
+                    ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
+                }
+                if (open.isSet()) {
+
+                    //  mw.setCurrentFilePath(newDialog.getPath());
+                    File fisierXML = new File(open.getPath());
+                    Scanner input = new Scanner(fisierXML);
+                    //fisierXML1 = fisierXML;
+
+                    while (input.hasNext()) {
+                        ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input.nextLine() + "\n");
+
+                    }
+                   input.close();
+                }
+            }
+        }
+        else if(!((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText().isEmpty()){
+            
+            out.println(fromXMLView);
+            out.close();
+        
+            XMLValidator.Validate("tempFileValidate.xml");
+        }
+    }
+    
     public void helpButtonPressed() {
 
         URL index;
