@@ -1,6 +1,7 @@
 package ui.right_side;
 
 import java.awt.BorderLayout;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
@@ -9,11 +10,15 @@ import org.fife.rsta.ac.LanguageSupportFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-public class XmlView extends AbstractView {
+public class XmlView extends AbstractView {    
 
     public XmlView() {
         super();
         init();
+    }  
+    
+    public JPopupMenu getPopupMenu(){
+        return ((RSyntaxTextArea)view).getPopupMenu();
     }
 
     private RSyntaxTextArea createTextArea() {
@@ -29,19 +34,23 @@ public class XmlView extends AbstractView {
         ToolTipManager.sharedInstance().registerComponent(textArea);
         return textArea;
     }
+    
+    
 
     private void init() {
         view = createTextArea();
-        label.setText("XMLEditor");
-        scrollPane = new RTextScrollPane(view, true);
+        label.setText("XMLView");
+        scrollPane = new RTextScrollPane(view, true); 
+        
         super.add(scrollPane, BorderLayout.CENTER);
+
         ((JTextArea) view).getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 if (docListener) {
                     update.setType(Update.INSERT_UPDATE);
                     notifyObservers();
-                }                
+                }
             }
 
             @Override

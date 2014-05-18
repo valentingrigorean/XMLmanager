@@ -2,7 +2,6 @@ package ui.right_side;
 
 import ui.utils.FlowLabel;
 import ui.MainWindow;
-import ui.utils.Menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,6 +13,7 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JPopupMenu;
 
 public abstract class AbstractView extends JPanel {
 
@@ -63,7 +63,7 @@ public abstract class AbstractView extends JPanel {
         this.mw = mw;
     }
 
-    public void addPopMenu(Menu menu) {
+    public void addPopMenu(JPopupMenu menu) {
         this.setComponentPopupMenu(menu);
         view.setComponentPopupMenu(menu);
     }

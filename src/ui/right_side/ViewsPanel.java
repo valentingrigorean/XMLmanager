@@ -6,6 +6,7 @@ import ui.utils.Menu;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
@@ -18,14 +19,15 @@ public class ViewsPanel extends JPanel implements Observer {
     private XmlView xmlView;
     private int currItems = 0x7;
     private MainWindow mw;
-    private JSplitPane splitPane1;    
-    private final Menu menu = new Menu(this);
+    private JSplitPane splitPane1;
+    private final Menu menu;
 
     public final static int TEXT_VIEW = 2;
     public final static int XML_VIEW = 1;
     public final static int TREE_VIEW = 0;
 
     public ViewsPanel() {
+        this.menu = new Menu(this);
         init();
     }
 
@@ -133,15 +135,13 @@ public class ViewsPanel extends JPanel implements Observer {
 
         splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, xmlView,
                 new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                        textView, treeView));        
+                        textView, treeView));
 
         this.setLayout(new GridLayout(1, 0));
 
         this.setComponentPopupMenu(menu);
 
-        xmlView.addPopMenu(menu);
-        textView.addPopMenu(menu);
-        treeView.addPopMenu(menu);
+        menuForViews();
 
         xmlView.addObserver(this);
         textView.addObserver(this);
@@ -173,7 +173,16 @@ public class ViewsPanel extends JPanel implements Observer {
         }
     }
 
-    private void notifyViews(Update upd) {            
+    private void notifyViews(Update upd) {
         mw.setFileStatus(true);
+    }
+
+    private void menuForViews() {
+        JPopupMenu m1 = xmlView.getPopupMenu();
+        m1.addSeparator();
+        m1.add(menu.getViews());
+        xmlView.addPopMenu(m1);
+        textView.addPopMenu(m1);
+        treeView.addPopMenu(m1);       
     }
 }
