@@ -30,7 +30,6 @@ public class XMLValidator {
      * 
      */
     
-    
     public static void Validate(String arg){
         
         try {
@@ -100,7 +99,8 @@ public class XMLValidator {
 
         XMLReader reader = parser.getXMLReader();
      
-        reader.setErrorHandler(new SimpleErrorHandler("WellWritten.txt"));
+        //reader.setErrorHandler(new SimpleErrorHandler("WellWritten.txt"));
+        reader.setErrorHandler(new XMLValidatorDisplayError("WellWritten.txt"));
         reader.parse(new InputSource(arg));
     }
 
@@ -114,7 +114,7 @@ public class XMLValidator {
         XMLReader reader = parser.getXMLReader();
 
      
-        reader.setErrorHandler(new SimpleErrorHandler("DtdError.txt"));
+        reader.setErrorHandler(new XMLValidatorDisplayError("DtdError.txt"));
         reader.parse(new InputSource(arg));
 
         return true;
@@ -131,7 +131,7 @@ public class XMLValidator {
 
         XMLReader reader = parser.getXMLReader();
         
-        reader.setErrorHandler(new SimpleErrorHandler("XsdError.txt"));
+        reader.setErrorHandler(new XMLValidatorDisplayError("XsdError.txt"));
         reader.parse(new InputSource(arg));
 
         return true;

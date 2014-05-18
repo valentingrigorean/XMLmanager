@@ -647,10 +647,8 @@ public class ButtonsPanel extends JPanel {
                 }
                 if (open.isSet()) {
 
-                    //  mw.setCurrentFilePath(newDialog.getPath());
                     File fisierXML = new File(open.getPath());
                     Scanner input = new Scanner(fisierXML);
-                    //fisierXML1 = fisierXML;
 
                     while (input.hasNext()) {
                         ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).append(input.nextLine() + "\n");

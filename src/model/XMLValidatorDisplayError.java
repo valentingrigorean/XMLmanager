@@ -18,12 +18,12 @@ import org.xml.sax.SAXParseException;
  *
  * @author Alex
  */
-public class SimpleErrorHandler implements ErrorHandler {
+public class XMLValidatorDisplayError implements ErrorHandler {
 
     public String fileError;
     public File f;
 
-    public SimpleErrorHandler(String arg) throws IOException {
+    public XMLValidatorDisplayError(String arg) throws IOException {
         this.fileError = arg;
         f = new File(fileError);
 
@@ -37,8 +37,12 @@ public class SimpleErrorHandler implements ErrorHandler {
             output.write("Warning - " + e.getMessage());
             output.write("Line Number = " + e.getLineNumber());
             output.write("Column Number = " + e.getColumnNumber());
-            
             output.close();
+            
+            System.out.println("Error - " + e.getMessage());
+            System.out.println("Line: " + e.getLineNumber());
+            System.out.println("Column: " + e.getColumnNumber());
+            
         } catch (IOException ex) {
            // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
