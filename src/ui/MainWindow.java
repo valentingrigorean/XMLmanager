@@ -1,9 +1,10 @@
 package ui;
 
-import ui.left_side.LeftSidePanel;
-import ui.right_side.ViewsPanel;
 import javax.swing.ImageIcon;
 import model.AutoSave;
+import ui.left_side.LeftSidePanel;
+import ui.right_side.ViewsPanel;
+import ui.dialogs.FindReplaceDialog;
 
 public class MainWindow extends javax.swing.JFrame {
 
@@ -61,7 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.setTitle("XML Editor 2.1");
         this.setIconImage(new ImageIcon(getClass().getResource(
                 "/res/xml_editor_logo_icon_v2.png")).getImage());
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);          
     }
 
     public void setCurrentFilePath(String path) {
@@ -114,6 +115,22 @@ public class MainWindow extends javax.swing.JFrame {
     public String getContent() {
         return rightSidePanel.getContent();
     }
+    
+    public void setLastSearchString(String str){
+        lastSearch = str;
+    }
+    
+    public String getLastSearchString(){
+        return lastSearch;
+    }
+    
+    public void setLastReplaceString(String str){
+        lastReplace = str;
+    }
+    
+    public String getLastReplaceString(){
+        return lastReplace;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private ui.left_side.LeftSidePanel leftSidePanel;
@@ -122,4 +139,6 @@ public class MainWindow extends javax.swing.JFrame {
     private AutoSave autoUpdate;
     private String currentFilePath;   
     private boolean fileStatus = false;
+    private String lastSearch;
+    private String lastReplace;
 }

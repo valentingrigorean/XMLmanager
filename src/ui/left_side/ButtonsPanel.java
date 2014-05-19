@@ -91,7 +91,7 @@ public class ButtonsPanel extends JPanel {
         KeyStroke tastaCtrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
         getInputMap(focusPeFereastra).put(tastaCtrlS, "SAVE");
         getActionMap().put("SAVE", btn3.getAction());
-
+      
         // --- SAVE BUTTON -----------------------------------------------------------------------------
         btn4 = new JButton("Validate");
         btn4.setAction(new AbstractAction(btn4.getActionCommand()) {
