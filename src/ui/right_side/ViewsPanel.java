@@ -1,22 +1,17 @@
 package ui.right_side;
 
 import java.awt.GridLayout;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import ui.MainWindow;
 import ui.utils.CPopupMenu;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import ui.dialogs.FindReplaceDialog;
 import ui.utils.ManageMenu;
 
 public class ViewsPanel extends JPanel implements Observer {

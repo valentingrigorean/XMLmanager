@@ -59,7 +59,7 @@ public class CPopupMenu extends JPopupMenu implements ActionListener {
             case ViewsPanel.TREE_VIEW:                
                 tree.setSelected(b);
         }      
-    }
+    }    
 
     @Override
     public void actionPerformed(ActionEvent e) {
