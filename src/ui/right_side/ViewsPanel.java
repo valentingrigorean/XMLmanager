@@ -2,15 +2,17 @@ package ui.right_side;
 
 import java.awt.GridLayout;
 import ui.MainWindow;
-import ui.utils.Menu;
+import ui.utils.CPopupMenu;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import ui.utils.ManageMenu;
 
 public class ViewsPanel extends JPanel implements Observer {
 
@@ -20,14 +22,13 @@ public class ViewsPanel extends JPanel implements Observer {
     private int currItems = 0x7;
     private MainWindow mw;
     private JSplitPane splitPane1;
-    private final Menu menu;
+    private ManageMenu manageMenu;
 
     public final static int TEXT_VIEW = 2;
     public final static int XML_VIEW = 1;
     public final static int TREE_VIEW = 0;
 
-    public ViewsPanel() {
-        this.menu = new Menu(this);
+    public ViewsPanel() {        
         init();
     }
 
@@ -82,12 +83,13 @@ public class ViewsPanel extends JPanel implements Observer {
 
     public void showPanel(int n) {
         currItems ^= 1 << n;
-        if (currItems > 0) {
+        if (currItems > 0) {           
             rearrange();
+            manageMenu.setSelected(n);
             this.revalidate();
         } else {
             currItems ^= 1 << n;
-            menu.setSelected(n, true);
+            manageMenu.setSelected(n, true);
         }
     }
 
@@ -128,7 +130,9 @@ public class ViewsPanel extends JPanel implements Observer {
         }
     }
 
-    private void init() {
+    private void init() {        
+        this.manageMenu = new ManageMenu();
+        
         textView = new TextView();
         treeView = new TreeView();
         xmlView = new XmlView();
@@ -137,9 +141,7 @@ public class ViewsPanel extends JPanel implements Observer {
                 new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                         textView, treeView));
 
-        this.setLayout(new GridLayout(1, 0));
-
-        this.setComponentPopupMenu(menu);
+        this.setLayout(new GridLayout(1, 0));       
 
         menuForViews();
 
@@ -156,20 +158,11 @@ public class ViewsPanel extends JPanel implements Observer {
 
     private void hidePanels(Update upd) {
         if (upd.getView() instanceof TextView) {
-            showPanel(TEXT_VIEW);
-            if (currItems != 4) {
-                menu.setSelected(TEXT_VIEW, false);
-            }
+            showPanel(TEXT_VIEW);            
         } else if (upd.getView() instanceof TreeView) {
-            showPanel(TREE_VIEW);
-            if (currItems != 1) {
-                menu.setSelected(TREE_VIEW, false);
-            }
+            showPanel(TREE_VIEW);            
         } else if (upd.getView() instanceof XmlView) {
-            showPanel(XML_VIEW);
-            if (currItems != 2) {
-                menu.setSelected(XML_VIEW, false);
-            }
+            showPanel(XML_VIEW);            
         }
     }
 
@@ -178,11 +171,18 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     private void menuForViews() {
-        JPopupMenu m1 = xmlView.getPopupMenu();
-        m1.addSeparator();
-        m1.add(menu.getViews());
-        xmlView.addPopMenu(m1);
-        textView.addPopMenu(m1);
-        treeView.addPopMenu(m1);       
+        CPopupMenu m1 = new CPopupMenu(this);
+        CPopupMenu m2 = new CPopupMenu(this);
+        JPopupMenu m3 = xmlView.getPopupMenu();
+        m3.addSeparator();
+        m3.add(m1.getViews());
+        
+        this.setComponentPopupMenu(m2);
+        xmlView.addPopMenu(m3);
+        textView.addPopMenu(m2);
+        treeView.addPopMenu(m2);   
+        
+        manageMenu.setView((JMenu) m3.getComponent(12));
+        manageMenu.setMenu(m2);
     }
 }

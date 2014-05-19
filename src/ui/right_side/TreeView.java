@@ -9,7 +9,7 @@ public class TreeView extends AbstractView {
     public TreeView() {
         super();
         init();
-    }   
+    }  
 
     private void init() {
         view = new XmlOutlineTree();
@@ -17,6 +17,6 @@ public class TreeView extends AbstractView {
         scrollPane = new JScrollPane(view);
         ((JScrollPane) scrollPane).setViewportView(view);
         super.add(scrollPane, BorderLayout.CENTER);
-    }    
+    }
 
 }

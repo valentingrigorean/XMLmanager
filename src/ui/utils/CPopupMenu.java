@@ -7,7 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
-public class Menu extends JPopupMenu implements ActionListener {
+public class CPopupMenu extends JPopupMenu implements ActionListener {
 
     private JCheckBoxMenuItem text;
     private JCheckBoxMenuItem xml;
@@ -15,7 +15,7 @@ public class Menu extends JPopupMenu implements ActionListener {
     private JMenu menuView;
     private final ViewsPanel controller;
 
-    public Menu(ViewsPanel controller) {
+    public CPopupMenu(ViewsPanel controller) {
         super();
         this.controller = controller;
         init();
@@ -50,13 +50,13 @@ public class Menu extends JPopupMenu implements ActionListener {
 
     public void setSelected(int n, boolean b) {
         switch(n){
-            case ViewsPanel.XML_VIEW:
+            case ViewsPanel.XML_VIEW:                
                 xml.setSelected(b);
                 return;
-            case ViewsPanel.TEXT_VIEW:
+            case ViewsPanel.TEXT_VIEW:                
                 text.setSelected(b);
                 return;
-            case ViewsPanel.TREE_VIEW:
+            case ViewsPanel.TREE_VIEW:                
                 tree.setSelected(b);
         }      
     }

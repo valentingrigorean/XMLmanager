@@ -9,7 +9,7 @@ public class TextView extends AbstractView {
     public TextView() {
         super();
         init();
-    }   
+    }
     
     private void init() {
         view = new JTextArea();
@@ -17,5 +17,5 @@ public class TextView extends AbstractView {
         ((JTextArea) view).setEditable(false);
         scrollPane = new JScrollPane(view);
         super.add(view, BorderLayout.CENTER);
-    }   
+    }
 }
