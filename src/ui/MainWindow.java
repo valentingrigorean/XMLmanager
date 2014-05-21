@@ -56,8 +56,7 @@ public class MainWindow extends javax.swing.JFrame {
         rightSidePanel.setMainWindow(this);
         
         this.setTitle("XML Editor 2.1");
-        this.setIconImage(new ImageIcon(getClass().getResource(
-                "/res/xml_editor_logo_icon_v2.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("/res/xml_editor_logo_icon_v4.png")).getImage());
         this.setLocationRelativeTo(null);          
     }
 
