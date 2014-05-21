@@ -34,11 +34,11 @@ public class XmlView extends AbstractView {
         ToolTipManager.sharedInstance().registerComponent(textArea);
         return textArea;
     }
-    
+  
     
 
     private void init() {
-        view = createTextArea();
+       view = createTextArea();
         label.setText("XMLView");
         scrollPane = new RTextScrollPane(view, true); 
         
