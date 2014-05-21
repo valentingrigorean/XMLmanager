@@ -1,8 +1,8 @@
 package ui.left_side;
 
+import java.awt.BorderLayout;
 import ui.MainWindow;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 public class LeftSidePanel extends JPanel {
@@ -32,14 +32,14 @@ public class LeftSidePanel extends JPanel {
     }
 
     private void init() {
-        this.setPreferredSize(new Dimension(250, 250));
-        this.setLayout(new GridLayout(1, 2));           
+        this.setPreferredSize(new Dimension(250,300));
+        this.setLayout(new BorderLayout());           
 
         buttonsPanel = new ButtonsPanel();
         recentFilesPanel = new RecentFilesPanel();
 
-        this.add(buttonsPanel);
-        this.add(recentFilesPanel);
+        this.add(buttonsPanel,BorderLayout.NORTH);
+        this.add(recentFilesPanel,BorderLayout.CENTER);
     }
 
 }

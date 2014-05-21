@@ -47,7 +47,7 @@ public class ButtonsPanel extends JPanel {
     }
 
     private void init() {
-        this.setPreferredSize(new Dimension(300, 300));
+        this.setPreferredSize(new Dimension(300, 150));
         this.setLayout(new GridLayout(5, 1));
 
         int focusPeFereastra = JComponent.WHEN_IN_FOCUSED_WINDOW; //tine cont daca e fereastra activata

@@ -17,18 +17,14 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        leftSidePanel = new ui.left_side.LeftSidePanel();
         rightSidePanel = new ui.right_side.ViewsPanel();
+        leftSidePanel = new ui.left_side.LeftSidePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        leftSidePanel.setMaximumSize(new java.awt.Dimension(250, 250));
-        leftSidePanel.setMinimumSize(new java.awt.Dimension(250, 250));
-        leftSidePanel.setLayout(new java.awt.GridLayout(2, 1));
-        getContentPane().add(leftSidePanel, java.awt.BorderLayout.LINE_START);
-
         rightSidePanel.setMinimumSize(new java.awt.Dimension(250, 250));
         getContentPane().add(rightSidePanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(leftSidePanel, java.awt.BorderLayout.LINE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
