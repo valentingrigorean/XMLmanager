@@ -61,6 +61,7 @@ public class Help extends JFrame implements ActionListener {
 
         setSize(new Dimension(600, 650));
         setLocationRelativeTo(null); //afisare in centrul ecranului
+        setResizable(false);
         setVisible(true);
         // ------------------------------------------------------
     }

@@ -8,7 +8,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -23,10 +25,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import model.XMLValidator;
+import model.XMLValidatorDisplayError;
 import ui.MainWindow;
-import ui.utils.Help;
 import ui.dialogs.NewDialog;
 import ui.dialogs.OpenDialog;
+import ui.utils.Help;
 
 public class ButtonsPanel extends JPanel {
 
@@ -167,8 +170,18 @@ public class ButtonsPanel extends JPanel {
 
             out.println(fromXMLView);
             out.close();
+            
+            //((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
 
             XMLValidator.Validate("tempFileValidate.xml");
+            
+            FileReader readValidationErrors = new FileReader("validationErrors.txt");
+            BufferedReader br = new BufferedReader(readValidationErrors);
+            mw.getViewsPanel().getErrorTextArea().read(br, null);
+            br.close();
+            mw.getViewsPanel().getErrorTextArea().requestFocus();
+            //mw.getViewsPanel().getErrorTextArea().setText();
+            
         }
     }
 
@@ -177,5 +190,7 @@ public class ButtonsPanel extends JPanel {
         Help fereastra = new Help();
         index = fereastra.getClass().getClassLoader().getResource("./ui/help_files/index.html");
         fereastra = new Help("Help", index);
+        
+        
     }
 }

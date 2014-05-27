@@ -1,0 +1,16 @@
+FatalErrorr - The element type "cds" must be terminated by the matching end-tag "</cds>".
+File: file:///D:/Facultate/Semestrul%202/Ingineria%20Programarii/Proiect/XMLmanager/tempFileValidate.xml
+Line Number: 13
+Column Number: 3
+FatalErrorr - The end-tag for element type "cds" must end with a '>' delimiter.
+File: file:///D:/Facultate/Semestrul%202/Ingineria%20Programarii/Proiect/XMLmanager/tempFileValidate.xml
+Line Number: 13
+Column Number: 3
+FatalErrorr - XML document structures must start and end within the same entity.
+File: file:///D:/Facultate/Semestrul%202/Ingineria%20Programarii/Proiect/XMLmanager/tempFileValidate.xml
+Line Number: 15
+Column Number: 1
+FatalErrorr - Premature end of file.
+File: file:///D:/Facultate/Semestrul%202/Ingineria%20Programarii/Proiect/XMLmanager/tempFileValidate.xml
+Line Number: 15
+Column Number: 1

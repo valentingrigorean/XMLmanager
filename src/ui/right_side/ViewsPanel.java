@@ -34,6 +34,14 @@ public class ViewsPanel extends JPanel implements Observer {
     private JSplitPane splitPane1;
     private ManageMenu manageMenu;
     private JTextArea errorTextArea;
+
+    public JTextArea getErrorTextArea() {
+        return errorTextArea;
+    }
+
+    public void setErrorTextArea(JTextArea errorTextArea) {
+        this.errorTextArea = errorTextArea;
+    }
     private String text;
     
     public final static int TEXT_VIEW = 2;

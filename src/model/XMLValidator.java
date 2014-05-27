@@ -28,12 +28,9 @@ public class XMLValidator {
 
     /**
      * @param args the command line arguments
-     * 
+     *
      */
-    
-    
-    public static void Validate(String arg)
-    {
+    public static void Validate(String arg) {
         try {
             File f = new File("WellWritten.txt");
             f.delete();
@@ -46,63 +43,63 @@ public class XMLValidator {
             f2.createNewFile();
             execute(arg);
         } catch (IOException ex) {
-           // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void execute(String arg) {
-        
+
         try {
             WellWriten(arg);
-            
-            
-            
+
             File f3 = new File(arg);
-            if (find(f3, "<!DOCTYPE")&&find (f3,"SYSTEM")&&find(f3,".dtd")) {
-                
+            if (find(f3, "<!DOCTYPE") && find(f3, "SYSTEM") && find(f3, ".dtd")) {
+
                 DTDValidate(arg);
-                
+
             } else {
-            
+
                 File f1 = new File("DtdError.txt");
                 f1.delete();
                 f1.createNewFile();
-            
+
             }
 
             if (find(f3, "xsi:noNamespaceSchemaLocation")) {
-                
+
                 XSDValidate(arg);
-                
+
             } else {
-           
+
                 File f2 = new File("XsdError.txt");
                 f2.delete();
                 f2.createNewFile();
-            
+
             }
-            
-            
+
         } catch (ParserConfigurationException ex) {
-           // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
-           // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-           //Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(XmlValidator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Error ex) {
         }
-       
+
     }
 
     public static void WellWriten(String arg) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(true);
-        
+
         SAXParser parser = factory.newSAXParser();
 
         XMLReader reader = parser.getXMLReader();
-     
-        reader.setErrorHandler(new XMLValidatorDisplayError("WellWritten.txt"));
+        reader.setFeature("http://apache.org/xml/features/continue-after-fatal-error", true);
+        reader.setErrorHandler(new XMLValidatorDisplayError("validationErrors.txt"));
         reader.parse(new InputSource(arg));
+     
     }
 
     public static boolean DTDValidate(String arg) throws ParserConfigurationException, SAXException, IOException {
@@ -114,10 +111,9 @@ public class XMLValidator {
 
         XMLReader reader = parser.getXMLReader();
 
-     
-     
-         ErrorHandler lenient = new XMLValidatorDisplayError("DtdError.txt");
-         reader.setErrorHandler(lenient);
+        ErrorHandler lenient = new XMLValidatorDisplayError("validationErrors.txt");
+        reader.setFeature("http://apache.org/xml/features/continue-after-fatal-error", true);
+        reader.setErrorHandler(lenient);
         reader.parse(new InputSource(arg));
 
         return true;
@@ -129,11 +125,12 @@ public class XMLValidator {
         factory.setNamespaceAware(true);
 
         SAXParser parser = factory.newSAXParser();
-        parser.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
+        parser.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+                "http://www.w3.org/2001/XMLSchema");
 
         XMLReader reader = parser.getXMLReader();
-      
-        reader.setErrorHandler(new XMLValidatorDisplayError("XsdError.txt"));
+        reader.setFeature("http://apache.org/xml/features/continue-after-fatal-error", true);
+        reader.setErrorHandler(new XMLValidatorDisplayError("validationErrors.txt"));
         reader.parse(new InputSource(arg));
 
         return true;
@@ -156,4 +153,5 @@ public class XMLValidator {
         }
         return result;
     }
+
 }

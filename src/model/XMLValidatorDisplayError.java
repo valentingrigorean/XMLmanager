@@ -4,9 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import ui.MainWindow;
+import ui.right_side.ViewsPanel;
 
 public class XMLValidatorDisplayError implements ErrorHandler {
 
@@ -20,62 +23,63 @@ public class XMLValidatorDisplayError implements ErrorHandler {
     }
 
     @Override
-    public void warning(SAXParseException e) throws SAXException {
+    public void warning(SAXParseException e) {
 
-        try {
-            BufferedWriter output = new BufferedWriter(new FileWriter(f));
-            output.write("Warning - " + e.getMessage());
-            output.write("Line Number = " + e.getLineNumber());
-            output.write("Column Number = " + e.getColumnNumber());
-            output.close();
+     try {
+           PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true))); 
+            out.println("Warning - " + e.getMessage() + " File= " + e.getSystemId() + " Line Number = " + e.getLineNumber() + " Column Number = " + e.getColumnNumber());
             
-            System.out.println("Error - " + e.getMessage());
+            System.out.println("Warning - " + e.getMessage());
+            System.out.println("In File - " + e.getSystemId());
             System.out.println("Line: " + e.getLineNumber());
             System.out.println("Column: " + e.getColumnNumber());
             
+            
+            
+            
+            out.close();
         } catch (IOException ex) {
-           // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     @Override
-    public void error(SAXParseException e) throws SAXException {
+    public void error(SAXParseException e) {
 
-        try {
-            BufferedWriter output = new BufferedWriter(new FileWriter(f));
-            output.write("Error - " + e.getMessage());
-            output.write("Line Number = " + e.getLineNumber());
-            output.write("Column Number = " + e.getColumnNumber());
-            output.close();
-            
+       try {
+           PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true))); 
+            out.println("Error - " + e.getMessage()+" File= "+e.getSystemId()+" Line Number = " + e.getLineNumber()+" Column Number = " + e.getColumnNumber());
+           
             System.out.println("Error - " + e.getMessage());
+            System.out.println("In File - " + e.getSystemId());
             System.out.println("Line: " + e.getLineNumber());
             System.out.println("Column: " + e.getColumnNumber());
             
+            out.close();
         } catch (IOException ex) {
-           // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void fatalError(SAXParseException e) throws SAXException {
+    public void fatalError(SAXParseException e) {
 
         try {
-            BufferedWriter output = new BufferedWriter(new FileWriter(f));
-            output.write("Fatal Error - " + e.getMessage());
-            output.write("Line Number = " + e.getLineNumber());
-            output.write("Column Number = " + e.getColumnNumber());
-            output.close();
+           PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true))); 
+            out.println("FatalErrorr - " + e.getMessage() + "\nFile: " + e.getSystemId() + "\nLine Number: " + e.getLineNumber() + "\nColumn Number: " + e.getColumnNumber());
             
-            System.out.println("Error - " + e.getMessage());
+            System.out.println("Fatal Error - " + e.getMessage());
+            System.out.println("In File - " + e.getSystemId());
             System.out.println("Line: " + e.getLineNumber());
             System.out.println("Column: " + e.getColumnNumber());
             
+            //mw.getViewsPanel().getErrorTextArea().setText("asdas" + e.getMessage());
+            
+            out.close();
         } catch (IOException ex) {
-           // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(SimpleErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+  
     }
-
 }
