@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -116,7 +117,11 @@ public class ButtonsPanel extends JPanel {
         btn5.setAction(new AbstractAction(btn5.getActionCommand()) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                helpButtonPressed();
+                try {
+                    helpButtonPressed();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(ButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         KeyStroke tastaF1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);
@@ -185,12 +190,17 @@ public class ButtonsPanel extends JPanel {
         }
     }
 
-    public void helpButtonPressed() {
-        URL index;
+    public void helpButtonPressed() throws MalformedURLException {
+        /*URL index;
         Help fereastra = new Help();
         index = fereastra.getClass().getClassLoader().getResource("./ui/help_files/index.html");
         fereastra = new Help("Help", index);
-        
+        */
+
+        File fisierIndex = new File("src/ui/help_files/index.html");
+        URL urlIndex = fisierIndex.toURI().toURL();
+        //System.out.println(fisierIndex.getAbsolutePath());
+        new Help("Help", urlIndex);
         
     }
 }
