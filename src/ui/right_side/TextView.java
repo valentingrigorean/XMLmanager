@@ -2,7 +2,6 @@ package ui.right_side;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
-
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,34 +21,66 @@ import org.xml.sax.SAXException;
 
 public class TextView extends AbstractView {
 
+    private String textFor = new String();
+
     public TextView() {
         super();
         init();
     }
 
     public void textFromXMLView(String s) {
+        textFor = "";
         try {
-            String text = new String();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
 
             InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(s));
+            is.setCharacterStream(new StringReader(s));         
             org.w3c.dom.Document doc = db.parse(is);
 
             Node n = doc.getFirstChild();
-            String nodesInfo = doc.getNodeValue();
+           // String nodesInfo = doc.getNodeValue();
+            //String q = new String();
+            //  System.out.println("aci  " + n);
+            if (n == doc.getLastChild()) {
+                if (n.getNodeName().contains("#comment")) {
 
-            String q = new String();
-            NodeList fi = (NodeList) n.getChildNodes();
-            System.out.println(fi.getLength());
-            for (int i = 0; i < fi.getLength(); i++) {
-                System.out.println(fi.item(i).getNodeName());
-                q += infoNode(fi.item(i));
+                } else if (n.hasChildNodes()) {
+                    NodeList sons = n.getChildNodes();
+                    // System.out.println("aci  " + n);
+                    for (int i = 0; i < sons.getLength(); i++) {
+                        //System.out.println(sons.item(i).getNodeName());
+                        infoNode(sons.item(i));
+                    }
+                } else {
+                    textFor += n.getNodeValue();
+                }
+            } else {
+                while (n != doc.getLastChild()) {
+                    if (n.getNodeName().contains("#comment")) {
+
+                    } else if (n.hasChildNodes()) {
+                        NodeList sons = n.getChildNodes();
+                        //System.out.println("aci  " + n);
+                        for (int i = 0; i < sons.getLength(); i++) {
+                            //System.out.println(sons.item(i).getNodeName());
+                            infoNode(sons.item(i));
+                        }
+                    } else {
+                        textFor += n.getNodeValue();
+                    }
+                    //System.out.println("aci2  " + n);
+                    n = n.getNextSibling();
+            //NodeList fi = (NodeList) n.getChildNodes();
+                    //System.out.println(fi.getLength());
+
+                }
             }
+            // System.out.println("aici ai textFor " + textFor);
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(TextView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ((JTextArea)view).setText(textFor);
     }
 
     private JTextArea createJTextArea() {
@@ -66,13 +97,13 @@ public class TextView extends AbstractView {
         return textArea;
     }
 
-    private String infoNode(Node n) {
-        String text = null;
+    private void infoNode(Node n) {
+
         if (n.getNodeValue() != null && !n.getNodeValue().matches("\n *")) {
-            text += n.getNodeValue();
+            textFor += n.getNodeValue();
             //text +='\n';
             if (n.getNodeName().contains("#")) {
-                text += '\n';
+                textFor += '\n';
             }
 
         } else {
@@ -82,7 +113,6 @@ public class TextView extends AbstractView {
             }
         }
 
-        return text;
     }
 
     private void init() {
@@ -93,5 +123,8 @@ public class TextView extends AbstractView {
         // scrollPane = new JScrollPane(view);
         ((JScrollPane) scrollPane).setViewportView(view);
         super.add(scrollPane, BorderLayout.CENTER);
+
+//((JTextArea) textView.getView()).setText("ala");
+        // this.getView().set
     }
 }

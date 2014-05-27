@@ -1,16 +1,16 @@
 package ui;
 
 import javax.swing.ImageIcon;
-import model.AutoSave;
+import threads.AutoSaveThread;
+import threads.IdleThread;
 import ui.left_side.LeftSidePanel;
 import ui.right_side.ViewsPanel;
-import ui.dialogs.FindReplaceDialog;
 
 public class MainWindow extends javax.swing.JFrame {
 
     public MainWindow() {
         initComponents();
-        init();
+        init();       
     }
 
     @SuppressWarnings("unchecked")
@@ -54,17 +54,18 @@ public class MainWindow extends javax.swing.JFrame {
     private void init() {
         leftSidePanel.setMainWindow(this);
         rightSidePanel.setMainWindow(this);
-        
+
         this.setTitle("XML Editor 2.1");
-        this.setIconImage(new ImageIcon(getClass().getResource("/res/xml_editor_logo_icon_v4.png")).getImage());
-        this.setLocationRelativeTo(null);          
+        this.setIconImage(new ImageIcon(getClass().
+                getResource("/res/xml_editor_logo_icon_v4.png")).getImage());
+        this.setLocationRelativeTo(null);
     }
 
     public void setCurrentFilePath(String path) {
         if (path == null && autoUpdate != null) {
             autoUpdate.stop();
         } else {
-            currentFilePath = path;            
+            currentFilePath = path;
             autoUpdateStart();
         }
     }
@@ -75,7 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void autoUpdateStart() {
         if (autoUpdate == null) {
-            autoUpdate = new AutoSave(currentFilePath, this);
+            autoUpdate = new AutoSaveThread(currentFilePath, this);
         } else {
             autoUpdate.stop();
             autoUpdate.setFilePath(currentFilePath);
@@ -110,20 +111,37 @@ public class MainWindow extends javax.swing.JFrame {
     public String getContent() {
         return rightSidePanel.getContent();
     }
-    
-    public void setLastSearchString(String str){
+
+    public void setLastSearchString(String str) {
         lastSearch = str;
     }
-    
-    public String getLastSearchString(){
+
+    public String getLastSearchString() {
         return lastSearch;
     }
-    
-    public void setLastReplaceString(String str){
+
+    public void setLastReplaceString(String str) {
         lastReplace = str;
     }
-    
-    public String getLastReplaceString(){
+
+    public void error(String type, String msg, int line, int column) {
+        rightSidePanel.getErrorView().clearAll();
+        rightSidePanel.getErrorView().error(type, msg, line, column);
+    }
+
+    public void clearAllErrors() {
+        rightSidePanel.getErrorView().clearAll();
+    }
+
+    public void setGotInput(boolean b) {
+        gotInput = b;
+    }
+
+    public boolean getGotInput() {
+        return gotInput;
+    }
+
+    public String getLastReplaceString() {
         return lastReplace;
     }
 
@@ -131,9 +149,10 @@ public class MainWindow extends javax.swing.JFrame {
     private ui.left_side.LeftSidePanel leftSidePanel;
     private ui.right_side.ViewsPanel rightSidePanel;
     // End of variables declaration//GEN-END:variables
-    private AutoSave autoUpdate;
-    private String currentFilePath;   
+    private AutoSaveThread autoUpdate;
+    private String currentFilePath;
     private boolean fileStatus = false;
+    private boolean gotInput = false;
     private String lastSearch;
     private String lastReplace;
 }

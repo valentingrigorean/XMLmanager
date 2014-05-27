@@ -1,0 +1,111 @@
+package model;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import ui.MainWindow;
+
+public class XMLValidator1 {
+
+    private final MainWindow mw;
+    SAXParser parser;
+    XMLReader reader;
+    SAXParserFactory factory;
+    XMLValidatorDisplayError1 errorHandler;
+
+    private static final String XML_READER_FEATURE
+            = "http://apache.org/xml/features/continue-after-fatal-error";
+
+    private static final String[] SAX_PARSER_PROPERTY
+            = new String[]{"http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+                "http://www.w3.org/2001/XMLSchema"
+            };
+
+    public XMLValidator1(MainWindow mw) {
+        this.mw = mw;
+        init();
+    }
+
+    public void execute(String str) {
+        wellWriten(str);
+        if (isDTD(str)) {
+            DTDValidate(str);
+        }
+        if (isXSD(str)) {
+            XSDValidate(str);
+        }
+    }
+
+    private void wellWriten(String str) {
+        try {
+            factory.setValidating(false);
+            factory.setNamespaceAware(true);
+
+            parser = factory.newSAXParser();
+
+            reader = parser.getXMLReader();
+            reader.setFeature(XML_READER_FEATURE, true);
+            reader.setErrorHandler(errorHandler);
+            reader.parse(new InputSource(new StringReader(str)));
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            //Logger.getLogger(XMLValidator1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void XSDValidate(String str) {
+        try {
+            factory.setValidating(true);
+            factory.setNamespaceAware(true);
+
+            parser = factory.newSAXParser();
+            parser.setProperty(SAX_PARSER_PROPERTY[0],
+                    SAX_PARSER_PROPERTY[1]);
+
+            reader = parser.getXMLReader();
+            reader.setFeature(XML_READER_FEATURE, true);
+            reader.setErrorHandler(errorHandler);
+            reader.parse(new InputSource(new StringReader(str)));
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            //Logger.getLogger(XMLValidator1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void DTDValidate(String str) {
+        try {
+            factory.setValidating(true);
+            factory.setNamespaceAware(true);
+
+            parser = factory.newSAXParser();
+            reader = parser.getXMLReader();
+
+            reader.setFeature(XML_READER_FEATURE, true);
+            reader.setErrorHandler(errorHandler);
+            reader.parse(new InputSource(new StringReader(str)));
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(XMLValidator1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private boolean isDTD(String str) {
+        return str.contains("<DOCTYPE") && str.contains("SYSTEM")
+                && str.contains(".dtd");
+    }
+
+    private boolean isXSD(String str) {
+        return str.contains("xsi:noNamespaceSchemaLocation");
+    }
+
+    private void init() {
+        errorHandler = new XMLValidatorDisplayError1(mw);
+        factory = SAXParserFactory.newInstance();
+    }
+}

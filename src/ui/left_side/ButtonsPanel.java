@@ -8,28 +8,18 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
-import model.XMLValidator;
-import model.XMLValidatorDisplayError;
 import ui.MainWindow;
 import ui.dialogs.NewDialog;
-import ui.dialogs.OpenDialog;
 import ui.utils.Help;
 
 public class ButtonsPanel extends JPanel {
@@ -141,8 +131,10 @@ public class ButtonsPanel extends JPanel {
     }
 
     public void validateButtonPressed() throws IOException {
-
-        String fromXMLView = ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText();
+        if(!mw.getContent().isEmpty()){
+            
+        }
+        /*String fromXMLView = ((JTextArea) (mw.getViewsPanel().getXmlView().getView())).getText();
         //System.out.println(fromXMLView);
 
         PrintWriter out = new PrintWriter("tempFileValidate.xml");
@@ -178,7 +170,7 @@ public class ButtonsPanel extends JPanel {
             PrintWriter emptyFile = new PrintWriter("validationErrors.txt");
             //((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
             emptyFile.print("");
-            XMLValidator.Validate("tempFileValidate.xml");
+            XMLValidator1.Validate("tempFileValidate.xml");
             
             FileReader readValidationErrors = new FileReader("validationErrors.txt");
             BufferedReader br = new BufferedReader(readValidationErrors);
@@ -190,20 +182,11 @@ public class ButtonsPanel extends JPanel {
             emptyFile.close();
             //mw.getViewsPanel().getErrorTextArea().setText();
             
-        }
+        }*/
     }
 
-    public void helpButtonPressed() throws MalformedURLException {
-        /*URL index;
-        Help fereastra = new Help();
-        index = fereastra.getClass().getClassLoader().getResource("./ui/help_files/index.html");
-        fereastra = new Help("Help", index);
-        */
-
-        File fisierIndex = new File("src/ui/help_files/index.html");
-        URL urlIndex = fisierIndex.toURI().toURL();
-        //System.out.println(fisierIndex.getAbsolutePath());
-        new Help("Help", urlIndex);
-        
+    public void helpButtonPressed() throws MalformedURLException {        
+        URL urlIndex = getClass().getResource("/res/help/index.html");       
+        new Help("Help", urlIndex);        
     }
 }

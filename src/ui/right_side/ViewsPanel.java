@@ -1,25 +1,16 @@
 package ui.right_side;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.io.StringReader;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.fife.rsta.ac.xml.tree.XmlOutlineTree;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import threads.IdleThread;
 import ui.MainWindow;
 import ui.utils.CPopupMenu;
 import ui.utils.ManageMenu;
@@ -32,17 +23,10 @@ public class ViewsPanel extends JPanel implements Observer {
     private int currItems = 0x7;
     private MainWindow mw;
     private JSplitPane splitPane1;
+    private JSplitPane splitPane2;
     private ManageMenu manageMenu;
-    private JTextArea errorTextArea;
-
-    public JTextArea getErrorTextArea() {
-        return errorTextArea;
-    }
-
-    public void setErrorTextArea(JTextArea errorTextArea) {
-        this.errorTextArea = errorTextArea;
-    }
-    private String text;
+    private volatile ErrorView errorView;
+    private IdleThread idleThread;
 
     public final static int TEXT_VIEW = 2;
     public final static int XML_VIEW = 1;
@@ -57,8 +41,6 @@ public class ViewsPanel extends JPanel implements Observer {
         if (arg instanceof Update) {
             switch (((Update) arg).getType()) {
                 case Update.CHANGE_UPDATE:
-                case Update.INSERT_UPDATE:
-                case Update.REMOVE_UPDATE:
                     notifyViews((Update) arg);
                     return;
                 case Update.VIEW_CHANGE:
@@ -72,7 +54,6 @@ public class ViewsPanel extends JPanel implements Observer {
         ((JTextArea) xmlView.getView()).setText(str);
         xmlView.setDocumentListener(true);
         textView.textFromXMLView(str);
-        ((JTextArea) textView.getView()).setText(text);
         reinvalidateViews();
     }
 
@@ -101,6 +82,8 @@ public class ViewsPanel extends JPanel implements Observer {
         textView.setMainWindow(mw);
         xmlView.setMainWindow(mw);
         treeView.setMainWindow(mw);
+        idleThread = new IdleThread(mw);
+        idleThread.start();
     }
 
     public void showPanel(int n) {
@@ -115,30 +98,36 @@ public class ViewsPanel extends JPanel implements Observer {
         }
     }
 
+    public ErrorView getErrorView() {
+        return errorView;
+    }
+
     private void rearrange() {
         if (this.getComponent(0) != splitPane1) {
             this.removeAll();
-            this.add(splitPane1, BorderLayout.CENTER);
-            this.add(new JScrollPane(errorTextArea), BorderLayout.SOUTH);
+            this.add(splitPane2);
         }
         switch (currItems) {
             case 7:
                 splitPane1.setLeftComponent(xmlView);
                 splitPane1.setRightComponent(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                         textView, treeView));
+                splitPane2.setTopComponent(splitPane1);
                 return;
             case 6:
                 splitPane1.setLeftComponent(xmlView);
                 splitPane1.setRightComponent(textView);
+                splitPane2.setTopComponent(splitPane1);
                 return;
             case 5:
                 splitPane1.setLeftComponent(textView);
                 splitPane1.setRightComponent(treeView);
+                splitPane2.setTopComponent(splitPane1);
                 return;
             case 4:
                 this.removeAll();
-                this.add(textView, BorderLayout.CENTER);
-                this.add(new JScrollPane(errorTextArea), BorderLayout.SOUTH);
+                splitPane2.setTopComponent(textView);
+                this.add(splitPane2);
                 return;
             case 3:
                 splitPane1.setLeftComponent(xmlView);
@@ -146,13 +135,14 @@ public class ViewsPanel extends JPanel implements Observer {
                 return;
             case 2:
                 this.removeAll();
-                this.add(xmlView, BorderLayout.CENTER);
-                this.add(new JScrollPane(errorTextArea), BorderLayout.SOUTH);
+                splitPane2.setTopComponent(xmlView);
+
+                this.add(splitPane2);
                 return;
             case 1:
                 this.removeAll();
-                this.add(treeView, BorderLayout.CENTER);
-                this.add(new JScrollPane(errorTextArea), BorderLayout.SOUTH);
+                splitPane2.setTopComponent(treeView);
+                this.add(splitPane2);
         }
     }
 
@@ -163,13 +153,15 @@ public class ViewsPanel extends JPanel implements Observer {
         treeView = new TreeView();
         xmlView = new XmlView();
 
+        errorView = new ErrorView();
+
+        xmlView.setDocumentListener(true);
+
         splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, xmlView,
                 new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                         textView, treeView));
 
-        errorTextArea = new JTextArea();
-        errorTextArea.setEditable(false);
-        errorTextArea.setPreferredSize(new Dimension(250, 100));
+        splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane1, errorView);
 
         this.setLayout(new BorderLayout());
 
@@ -183,8 +175,7 @@ public class ViewsPanel extends JPanel implements Observer {
         ((XmlOutlineTree) treeView.getView()).listenTo((RSyntaxTextArea) xmlView.getView());
         treeView.revalidate();
 
-        this.add(splitPane1, BorderLayout.CENTER);
-        this.add(new JScrollPane(errorTextArea), BorderLayout.SOUTH);
+        this.add(splitPane2, BorderLayout.CENTER);
     }
 
     private void hidePanels(Update upd) {
@@ -198,9 +189,10 @@ public class ViewsPanel extends JPanel implements Observer {
     }
 
     private void notifyViews(Update upd) {
-        mw.setFileStatus(true);       
+        idleThread.resetTimer();
         textView.textFromXMLView(getContent());
-        ((JTextArea) textView.getView()).setText(text);
+        mw.setFileStatus(true);
+        mw.setGotInput(true);
     }
 
     private void menuForViews() {

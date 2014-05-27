@@ -1,0 +1,32 @@
+package model;
+
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXParseException;
+import ui.MainWindow;
+
+public class XMLValidatorDisplayError1 implements ErrorHandler {
+
+    private final MainWindow mw;
+
+    public XMLValidatorDisplayError1(MainWindow mw) {
+        this.mw = mw;
+    }
+
+    @Override
+    public void warning(SAXParseException e) {
+        mw.error("warning", e.getMessage(), e.getLineNumber(),
+                e.getColumnNumber());
+    }
+
+    @Override
+    public void error(SAXParseException e) {
+        mw.error("error", e.getMessage(), e.getLineNumber(),
+                e.getColumnNumber());
+    }
+
+    @Override
+    public void fatalError(SAXParseException e) {
+        mw.error("fatalError", e.getMessage(), e.getLineNumber(),
+                e.getColumnNumber());
+    }
+}

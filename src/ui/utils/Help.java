@@ -12,11 +12,7 @@ import java.awt.*;
 public class Help extends JFrame implements ActionListener {
 
     private JEditorPane editorPanel;
-    private URL adresaFisier;
-
-    public Help() {
-        //constructor simplu, neparametrizat
-    }
+    private URL adresaFisier;   
 
     public Help(String titluFereastra, URL adresaFisierIN) {
 
@@ -57,7 +53,8 @@ public class Help extends JFrame implements ActionListener {
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //inchid doar fereastra help
 
-        this.setIconImage(new ImageIcon(getClass().getResource("/res/xml_editor_logo_icon_v2.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().
+                getResource("/res/xml_editor_logo_icon_v4.png")).getImage());
 
         setSize(new Dimension(600, 650));
         setLocationRelativeTo(null); //afisare in centrul ecranului
