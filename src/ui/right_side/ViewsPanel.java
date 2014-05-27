@@ -71,7 +71,11 @@ public class ViewsPanel extends JPanel implements Observer {
        
         if (n.getNodeValue() != null && !n.getNodeValue().matches("\n *")) {
             text += n.getNodeValue();
-            text +='\n';
+             //text +='\n';
+            if(n.getNodeName().contains("#")) 
+             
+                text +='\n';
+            
             
         } else {
             NodeList p = (NodeList) n.getChildNodes();
@@ -243,8 +247,17 @@ public class ViewsPanel extends JPanel implements Observer {
         }
     }
     
-    private void notifyViews(Update upd) {
-        mw.setFileStatus(true);
+    private void notifyViews(Update upd)  {
+       
+        try {
+            mw.setFileStatus(true);
+            textFromXMLView(getContent());
+            ((JTextArea) textView.getView()).setText(text);
+            //textFromXMLView(this.getContent());
+        } catch (Exception ex) {
+            Logger.getLogger(ViewsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
     
     private void menuForViews() {

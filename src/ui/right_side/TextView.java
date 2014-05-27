@@ -6,6 +6,7 @@ import javax.swing.JTextArea;
 import javax.swing.ToolTipManager;
 import org.fife.rsta.ac.LanguageSupportFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class TextView extends AbstractView {
 
@@ -32,10 +33,11 @@ public class TextView extends AbstractView {
     private void init() {
         view = createJTextArea();
         label.setText("TextView");
+        scrollPane = new RTextScrollPane(view, true);
         ((JTextArea) view).setEditable(false);
-        scrollPane = new JScrollPane(view);
+       // scrollPane = new JScrollPane(view);
         ((JScrollPane) scrollPane).setViewportView(view);
-        super.add(view, BorderLayout.CENTER);
+        super.add(scrollPane, BorderLayout.CENTER);
         
        
     }
