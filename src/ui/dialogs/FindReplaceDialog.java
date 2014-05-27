@@ -1,5 +1,6 @@
 package ui.dialogs;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -21,7 +23,7 @@ import org.fife.ui.rtextarea.SearchResult;
 import ui.MainWindow;
 import ui.utils.LabelledItemPanel;
 
-public class FindReplaceDialog extends JPanel {
+public class FindReplaceDialog extends JFrame {
 
     private JTextField searchField;
     private JTextField replaceField;
@@ -35,7 +37,10 @@ public class FindReplaceDialog extends JPanel {
 
     public FindReplaceDialog(final MainWindow frame) {
         setLayout(new GridLayout(4, 1));
-        textArea = null;
+        textArea = (RSyntaxTextArea) frame.getViewsPanel().getXmlView().getView();
+        this.setResizable(false);
+        this.setPreferredSize(new Dimension(250,400));
+        this.setMinimumSize(new Dimension(250,400));
 
         LabelledItemPanel findReplacePanel = new LabelledItemPanel();
 
@@ -69,7 +74,7 @@ public class FindReplaceDialog extends JPanel {
         add(directionPanel);
         add(optionsPanel);
         add(buttonPanel);
-        this.setBorder(new EmptyBorder(10, 10, 15, 15)); // Padding around panel
+        optionsPanel.setBorder(new EmptyBorder(10, 10, 15, 15)); // Padding around panel
 
         searchField = new JTextField(20);
         searchField.setText(frame.getLastSearchString());
@@ -132,7 +137,7 @@ public class FindReplaceDialog extends JPanel {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                hideI();
             }
         });
         buttonPanel.add(closeButton);
@@ -167,6 +172,10 @@ public class FindReplaceDialog extends JPanel {
                 }
             }
         }
+    }
+    
+    private void hideI(){
+        this.setVisible(false);
     }
     
     private void replace(SearchContext context) {

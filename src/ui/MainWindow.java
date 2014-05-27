@@ -2,7 +2,7 @@ package ui;
 
 import javax.swing.ImageIcon;
 import threads.AutoSaveThread;
-import threads.IdleThread;
+import ui.dialogs.FindReplaceDialog;
 import ui.left_side.LeftSidePanel;
 import ui.right_side.ViewsPanel;
 
@@ -10,7 +10,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     public MainWindow() {
         initComponents();
-        init();       
+        init();         
     }
 
     @SuppressWarnings("unchecked")
