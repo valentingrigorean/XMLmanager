@@ -68,18 +68,19 @@ public class ViewsPanel extends JPanel implements Observer {
     }
     
     public String infoNode(Node n) {
-        String s = "\n";
-        if (n.getNodeValue() != null) {
-            s = n.getNodeValue();            
-            System.out.println("S este " + s);
+       
+        if (n.getNodeValue() != null && !n.getNodeValue().matches("\n *")) {
+            text += n.getNodeValue();
+            text +='\n';
+            
         } else {
             NodeList p = (NodeList) n.getChildNodes();
             for (int i = 0; i < p.getLength(); i++) {
                 infoNode(p.item(i));
             }
         }
-        text += s;
-        return s;
+        
+        return text;
     }
 
     public void textFromXMLView(String s) throws Exception {
@@ -90,10 +91,10 @@ public class ViewsPanel extends JPanel implements Observer {
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(s));
         org.w3c.dom.Document doc = db.parse(is);
-        //String nodesNames = doc.getNodeName();
+        
         Node n = doc.getFirstChild();
         String nodesInfo = doc.getNodeValue();
-        //if(n.hasChildNodes())
+        
         String q = new String();
         NodeList fi = (NodeList) n.getChildNodes();
         System.out.println(fi.getLength());
@@ -101,48 +102,6 @@ public class ViewsPanel extends JPanel implements Observer {
             System.out.println(fi.item(i).getNodeName());
             q += infoNode(fi.item(i));
         }
-        System.out.println(q);
-//System.out.println(s);
-
-        /*
-         while(doc.hasChildNodes())
-         {
-         nodesInfo = doc.getNodeValue();
-         System.out.println(nodesInfo);
-         }
-         */
-       //List<Elements> elements = new ArrayList<Elements>();
-    /*    
-         String[] newXml = s.split("\\<\\?");
-         ArrayList<String> xmlList = new ArrayList<>(Arrays.asList(newXml));
-         for(int i = 0; i<xmlList.size();i++){
-         if(!xmlList.get(i).contains("xml version=\"1.0\" encoding=\"UTF-8\"")){
-         xmlList.remove(i);
-         }
-
-         }
-         for(int j = 0;j<xmlList.size();j++){
-         xmlList.set(j, "<?"+xmlList.get(j));
-         xmlList.set(j,xmlList.get(j).split("\\#")[0]);
-         }
-
-         for (String xmlList1 : xmlList) {
-         System.out.println(xmlList1);
-         }
-         */
-        /*
-         is.setCharacterStream(new StringReader(s));
-         DOMSource domSource = new DOMSource(db.parse(is));
-         StringWriter writer = new StringWriter();
-         //StreamResult = new StreamResult(writer);
-         StreamResult result = new StreamResult(writer);
-         TransformerFactory tf = TransformerFactory.newInstance();
-         Transformer transformer =tf.newTransformer();
-         transformer.transform(domSource, result);
-         System.out.println("XML IN String format is: \n" + writer.toString());
-         //DOMParser parser = new DOMParser();
-         //Document doc = parser.getDocument();
-         */
     }
     
     public void setContent(String str) {
