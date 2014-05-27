@@ -175,9 +175,9 @@ public class ButtonsPanel extends JPanel {
 
             out.println(fromXMLView);
             out.close();
-            
+            PrintWriter emptyFile = new PrintWriter("validationErrors.txt");
             //((JTextArea) (mw.getViewsPanel().getXmlView().getView())).setText(null);
-
+            emptyFile.print("");
             XMLValidator.Validate("tempFileValidate.xml");
             
             FileReader readValidationErrors = new FileReader("validationErrors.txt");
@@ -185,6 +185,9 @@ public class ButtonsPanel extends JPanel {
             mw.getViewsPanel().getErrorTextArea().read(br, null);
             br.close();
             mw.getViewsPanel().getErrorTextArea().requestFocus();
+            
+            emptyFile.print("");
+            emptyFile.close();
             //mw.getViewsPanel().getErrorTextArea().setText();
             
         }
