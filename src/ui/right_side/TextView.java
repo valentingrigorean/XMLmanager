@@ -103,7 +103,7 @@ public class TextView extends AbstractView {
             textFor += n.getNodeValue();
             //text +='\n';
             if (n.getNodeName().contains("#")) {
-                textFor += '\n';
+                textFor += ' ';
             }
 
         } else {
@@ -116,9 +116,9 @@ public class TextView extends AbstractView {
     }
 
     private void init() {
-        view = createJTextArea();
+        view = new JTextArea();
         label.setText("TextView");
-        scrollPane = new RTextScrollPane(view, true);
+        scrollPane = new JScrollPane(view);
         ((JTextArea) view).setEditable(false);
         // scrollPane = new JScrollPane(view);
         ((JScrollPane) scrollPane).setViewportView(view);

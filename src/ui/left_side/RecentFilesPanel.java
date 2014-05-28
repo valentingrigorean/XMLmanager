@@ -50,7 +50,7 @@ public class RecentFilesPanel extends JPanel {
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         panel.add(tree);
 
-        this.add(new FlowLabel("Recent Files"), BorderLayout.NORTH);
+        this.add(new FlowLabel("XML Categories"), BorderLayout.NORTH);
         this.add(panel, BorderLayout.CENTER);
     }
 }
